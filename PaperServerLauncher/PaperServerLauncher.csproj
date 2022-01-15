@@ -48,6 +48,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Utils.cs" />
     <Compile Include="PaperServerLauncher.cs">
       <SubType>Form</SubType>
     </Compile>
