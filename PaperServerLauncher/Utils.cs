@@ -10,8 +10,8 @@ namespace PaperServerLauncher
     {
         public static class Constants
         {
-            public static int UNIT_MODE_MB = 0;
-            public static int UNIT_MODE_GB = 1;
+            public const int UNIT_MODE_MB = 0;
+            public const int UNIT_MODE_GB = 1;
         }
 
         public static class Maths
