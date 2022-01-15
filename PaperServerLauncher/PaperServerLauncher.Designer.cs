@@ -39,7 +39,6 @@
             this.txtServerJar = new System.Windows.Forms.TextBox();
             this.btnBrowseJar = new System.Windows.Forms.Button();
             this.grpJavaFlags = new System.Windows.Forms.GroupBox();
-            this.lnkCustomizeFlags = new System.Windows.Forms.LinkLabel();
             this.cbxAikarsFlags = new System.Windows.Forms.CheckBox();
             this.lblCurrentRam = new System.Windows.Forms.Label();
             this.cbRamUnits = new System.Windows.Forms.ComboBox();
@@ -139,7 +138,6 @@
             // 
             // grpJavaFlags
             // 
-            this.grpJavaFlags.Controls.Add(this.lnkCustomizeFlags);
             this.grpJavaFlags.Controls.Add(this.cbxAikarsFlags);
             this.grpJavaFlags.Controls.Add(this.lblCurrentRam);
             this.grpJavaFlags.Controls.Add(this.cbRamUnits);
@@ -152,18 +150,6 @@
             this.grpJavaFlags.TabIndex = 5;
             this.grpJavaFlags.TabStop = false;
             this.grpJavaFlags.Text = "Java Flags";
-            // 
-            // lnkCustomizeFlags
-            // 
-            this.lnkCustomizeFlags.AutoSize = true;
-            this.lnkCustomizeFlags.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lnkCustomizeFlags.Location = new System.Drawing.Point(119, 73);
-            this.lnkCustomizeFlags.Name = "lnkCustomizeFlags";
-            this.lnkCustomizeFlags.Size = new System.Drawing.Size(64, 13);
-            this.lnkCustomizeFlags.TabIndex = 10;
-            this.lnkCustomizeFlags.TabStop = true;
-            this.lnkCustomizeFlags.Text = "Customize...";
-            this.lnkCustomizeFlags.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkCustomizeFlags_LinkClicked);
             // 
             // cbxAikarsFlags
             // 
@@ -300,7 +286,6 @@
         private System.Windows.Forms.NumericUpDown numRAM;
         private System.Windows.Forms.ComboBox cbRamUnits;
         private System.Windows.Forms.Label lblCurrentRam;
-        private System.Windows.Forms.LinkLabel lnkCustomizeFlags;
         private System.Windows.Forms.CheckBox cbxAikarsFlags;
         private System.Windows.Forms.GroupBox grpPlugins;
         private System.Windows.Forms.TextBox textBox1;
