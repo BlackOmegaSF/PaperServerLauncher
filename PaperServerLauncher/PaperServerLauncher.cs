@@ -23,7 +23,7 @@ namespace PaperServerLauncher
             //TODO Load and apply settings
 
             //Get and update RAM
-            updateInstalledRamLabel(cbRamUnits.SelectedIndex);
+            updateRamUnits(cbRamUnits.SelectedIndex, true);
         }
 
         private void numRAM_KeyPress(object sender, KeyPressEventArgs e)
@@ -31,7 +31,7 @@ namespace PaperServerLauncher
             e.Handled = !char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar);
         }
 
-        private void updateInstalledRamLabel(int unitMode)
+        private void updateRamUnits(int unitMode, bool updateNumUpDown)
         {
             ManagementObjectSearcher ramSearcher = new ManagementObjectSearcher("SELECT * FROM Win32_PhysicalMemory");
             UInt64 ramBytes = 0;
@@ -39,9 +39,7 @@ namespace PaperServerLauncher
             {
                 ramBytes += (UInt64)ramObject["Capacity"];
             }
-            //DEBUG
-            ramBytes = (UInt64)(16 * Math.Pow(2, 30));
-            //Doo math, since it's the same no matter the units
+            //Do math, since it's the same no matter the units
             UInt64 recRam;
             //If you have less than 4GB, recommend none
             if (ramBytes < (4 * Math.Pow(2, 30)))
@@ -57,12 +55,15 @@ namespace PaperServerLauncher
                 recRam = (UInt64)(16 * Math.Pow(2, 30));
             }
 
-            //TODO format based on loaded settings
+            //Format based on loaded settings
             //Special case for potatoes
             if (recRam == 0)
             {
                 lblCurrentRam.Text = "Running the server is not recommended, not enough RAM!";
-                numRAM.Value = 0;
+                if (updateNumUpDown)
+                {
+                    numRAM.Value = 0;
+                }
                 return;
             }
             UInt64 displayRAM = 0;
@@ -82,7 +83,10 @@ namespace PaperServerLauncher
             }
             //Set label accordingly
             lblCurrentRam.Text = "Recommend " + displayRecRam.ToString() + ramUnits + " of " + displayRAM.ToString() + ramUnits + " installed";
-            numRAM.Value = displayRecRam;
+            if (updateNumUpDown)
+            {
+                numRAM.Value = displayRecRam;
+            }
         }
 
 
@@ -119,6 +123,23 @@ namespace PaperServerLauncher
             if (ofd.ShowDialog() == DialogResult.OK)
             {
                 txtServerJar.Text = ofd.FileName;
+            }
+        }
+
+        //Update when changing units
+        private void cbRamUnits_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            updateRamUnits(cbRamUnits.SelectedIndex, false);
+            //Calculate and update numRam
+            switch (cbRamUnits.SelectedIndex)
+            {
+                case Utils.Constants.UNIT_MODE_MB:
+                    numRAM.Value *= 1024;
+                    break;
+
+                case Utils.Constants.UNIT_MODE_GB:
+                    numRAM.Value = (numRAM.Value - (numRAM.Value % 1024)) / 1024;
+                    break;
             }
         }
     }

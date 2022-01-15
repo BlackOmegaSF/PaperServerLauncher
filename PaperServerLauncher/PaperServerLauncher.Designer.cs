@@ -197,6 +197,7 @@
             this.cbRamUnits.Name = "cbRamUnits";
             this.cbRamUnits.Size = new System.Drawing.Size(48, 21);
             this.cbRamUnits.TabIndex = 7;
+            this.cbRamUnits.SelectedIndexChanged += new System.EventHandler(this.cbRamUnits_SelectedIndexChanged);
             // 
             // numRAM
             // 

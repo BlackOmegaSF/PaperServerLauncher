@@ -23,6 +23,7 @@ namespace PaperServerLauncher
                     power*= 2;
                 return power / 2;
             }
+
         }
         
     }
