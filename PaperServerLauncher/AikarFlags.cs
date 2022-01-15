@@ -10,11 +10,17 @@ using System.Windows.Forms;
 
 namespace PaperServerLauncher
 {
-    public partial class AikarFlags : Form
+    public partial class AikarFlagsForm : Form
     {
-        public AikarFlags()
+        public AikarFlagsForm()
         {
             InitializeComponent();
+
+            var source = new BindingSource();
+            source.DataSource = Utils.AikarFlagData.flagsList;
+            dgvFlags.DataSource = source;
+
         }
+
     }
 }

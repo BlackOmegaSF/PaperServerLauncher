@@ -47,10 +47,9 @@ namespace PaperServerLauncher
 
         }
 
-        public class AikarFlagData
+        public static class AikarFlagData
         {
-            BindingSource source = new BindingSource();
-            List<AikarFlag> flagsList = new List<AikarFlag>()
+            public static List<AikarFlag> flagsList = new List<AikarFlag>()
             {
                 new AikarFlag("UseG1GC", true, null, null, "-XX:+UseG1GC"),
                 new AikarFlag("ParallelRefProcEnabled", true, null, null, "-XX:+ParallelRefProcEnabled"),
@@ -72,7 +71,7 @@ namespace PaperServerLauncher
                 new AikarFlag("MaxTenuringThreshold", true, 1, null, "-XX:MaxTenuringThreshold"),
                 new AikarFlag("UsingAikarsFlags", true, null, "https://mcflags.emc.gs", "-Dusing.aikars.flags"),
                 new AikarFlag("AikarsNewFlags", true, null, "true", "-Daikars.new.flags"),
-            }
+            };
         }
         
     }

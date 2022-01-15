@@ -1,6 +1,6 @@
 ﻿namespace PaperServerLauncher
 {
-    partial class AikarFlags
+    partial class AikarFlagsForm
     {
         /// <summary>
         /// Required designer variable.
@@ -28,28 +28,28 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.dgvFlags = new System.Windows.Forms.DataGridView();
             this.Enable = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.Flag = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Value = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvFlags)).BeginInit();
             this.SuspendLayout();
             // 
-            // dataGridView1
+            // dgvFlags
             // 
-            this.dataGridView1.AllowUserToAddRows = false;
-            this.dataGridView1.AllowUserToDeleteRows = false;
-            this.dataGridView1.AllowUserToResizeColumns = false;
-            this.dataGridView1.AllowUserToResizeRows = false;
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dgvFlags.AllowUserToAddRows = false;
+            this.dgvFlags.AllowUserToDeleteRows = false;
+            this.dgvFlags.AllowUserToResizeColumns = false;
+            this.dgvFlags.AllowUserToResizeRows = false;
+            this.dgvFlags.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvFlags.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Enable,
             this.Flag,
             this.Value});
-            this.dataGridView1.Location = new System.Drawing.Point(12, 40);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(373, 150);
-            this.dataGridView1.TabIndex = 0;
+            this.dgvFlags.Location = new System.Drawing.Point(12, 40);
+            this.dgvFlags.Name = "dgvFlags";
+            this.dgvFlags.Size = new System.Drawing.Size(373, 150);
+            this.dgvFlags.TabIndex = 0;
             // 
             // Enable
             // 
@@ -71,22 +71,22 @@
             this.Value.HeaderText = "Value";
             this.Value.Name = "Value";
             // 
-            // AikarFlags
+            // AikarFlagsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(397, 459);
-            this.Controls.Add(this.dataGridView1);
-            this.Name = "AikarFlags";
+            this.Controls.Add(this.dgvFlags);
+            this.Name = "AikarFlagsForm";
             this.Text = "Customize Aikar\'s Flags";
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvFlags)).EndInit();
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridView dgvFlags;
         private System.Windows.Forms.DataGridViewCheckBoxColumn Enable;
         private System.Windows.Forms.DataGridViewTextBoxColumn Flag;
         private System.Windows.Forms.DataGridViewTextBoxColumn Value;
