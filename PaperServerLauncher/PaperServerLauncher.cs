@@ -142,5 +142,12 @@ namespace PaperServerLauncher
                     break;
             }
         }
+
+        //Open Aikar's Flags form
+        private void lnkCustomizeFlags_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            AikarFlagsForm form = new AikarFlagsForm();
+            form.Show();
+        }
     }
 }

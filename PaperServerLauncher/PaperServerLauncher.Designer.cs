@@ -163,6 +163,7 @@
             this.lnkCustomizeFlags.TabIndex = 10;
             this.lnkCustomizeFlags.TabStop = true;
             this.lnkCustomizeFlags.Text = "Customize...";
+            this.lnkCustomizeFlags.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkCustomizeFlags_LinkClicked);
             // 
             // cbxAikarsFlags
             // 
