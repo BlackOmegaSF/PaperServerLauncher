@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Management;
 using System.Runtime.InteropServices;
+using System.IO;
 
 namespace PaperServerLauncher
 {
@@ -53,10 +54,18 @@ namespace PaperServerLauncher
         //Handle browsing for server jar
         private void btnBrowseJar_Click(object sender, EventArgs e)
         {
+            //Browse to dir based on what's in the box, if it's valid
+            string browseDir = AppDomain.CurrentDomain.BaseDirectory;
+            string extgText = txtServerJar.Text;
+            if (File.Exists(extgText) || Directory.Exists(extgText))
+            {
+                browseDir = extgText;
+            }
             OpenFileDialog ofd = new OpenFileDialog();
             ofd.Title = "Select Server Jar";
-            ofd.InitialDirectory = AppDomain.CurrentDomain.BaseDirectory;
+            ofd.InitialDirectory = browseDir;
             ofd.Filter = "Jar Files (*.jar)|*.jar";
+            ofd.RestoreDirectory = true;
             if (ofd.ShowDialog() == DialogResult.OK)
             {
                 txtServerJar.Text = ofd.FileName;
