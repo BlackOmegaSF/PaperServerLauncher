@@ -48,6 +48,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AikarFlags.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AikarFlags.Designer.cs">
+      <DependentUpon>AikarFlags.cs</DependentUpon>
+    </Compile>
     <Compile Include="Utils.cs" />
     <Compile Include="PaperServerLauncher.cs">
       <SubType>Form</SubType>
@@ -57,6 +63,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="AikarFlags.resx">
+      <DependentUpon>AikarFlags.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="PaperServerLauncher.resx">
       <DependentUpon>PaperServerLauncher.cs</DependentUpon>
     </EmbeddedResource>

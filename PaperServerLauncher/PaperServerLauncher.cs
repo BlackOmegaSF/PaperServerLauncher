@@ -69,13 +69,13 @@ namespace PaperServerLauncher
             UInt64 displayRAM = 0;
             UInt64 displayRecRam = 0;
             string ramUnits = "";
-            if (unitMode == Utils.Constants.UNIT_MODE_MB)
+            if (unitMode == (int)Utils.Constants.UNIT_MODE_MB)
             {
                 ramUnits = "MB";
                 displayRAM = ramBytes / (UInt64)Math.Pow(2, 20);
                 displayRecRam = recRam / (UInt64)Math.Pow(2, 20);
             } 
-            else if (unitMode == Utils.Constants.UNIT_MODE_GB)
+            else if (unitMode == (int)Utils.Constants.UNIT_MODE_GB)
             {
                 ramUnits = "GB";
                 displayRAM = ramBytes / (UInt64)Math.Pow(2, 30);
@@ -133,11 +133,11 @@ namespace PaperServerLauncher
             //Calculate and update numRam
             switch (cbRamUnits.SelectedIndex)
             {
-                case Utils.Constants.UNIT_MODE_MB:
+                case (int)Utils.Constants.UNIT_MODE_MB:
                     numRAM.Value *= 1024;
                     break;
 
-                case Utils.Constants.UNIT_MODE_GB:
+                case (int)Utils.Constants.UNIT_MODE_GB:
                     numRAM.Value = (numRAM.Value - (numRAM.Value % 1024)) / 1024;
                     break;
             }

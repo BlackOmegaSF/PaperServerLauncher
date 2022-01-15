@@ -8,10 +8,10 @@ namespace PaperServerLauncher
 {
     static class Utils
     {
-        public static class Constants
+        public enum Constants
         {
-            public const int UNIT_MODE_MB = 0;
-            public const int UNIT_MODE_GB = 1;
+            UNIT_MODE_MB = 0,
+            UNIT_MODE_GB = 1
         }
 
         public static class Maths
@@ -23,6 +23,34 @@ namespace PaperServerLauncher
                     power*= 2;
                 return power / 2;
             }
+
+        }
+
+        public class AikarFlag
+        {
+            public bool enabled = false;
+            public int numValue = 0;
+            public string name = "";
+            public string strValue = "";
+
+        }
+
+        public class AikarFlagStates
+        {
+            public int maxGCPauseMillis = 200;
+            public int g1NewSizePercent = 30;
+            public int g1MaxNewSizePercent = 40;
+            public int g1HeapRegionSize = 8;
+            public int g1ReservePercent = 20;
+            public int g1HeapWastePercent = 5;
+            public int g1MixedGCCountTarget = 4;
+            public int initiatingHeapOccupancyPercent = 15;
+            public int g1MixedGCLiveThresholdPercent = 90;
+            public int g1RSetUpdatingPauseTimePercent = 5;
+            public int survivorRatio = 32;
+            public int maxTenuringThreshold = 1;
+            public string usingAikarsFlags = "https://mcflags.emc.gs";
+            public bool aikarsNewFlags = true;
 
         }
         
