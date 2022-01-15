@@ -28,10 +28,18 @@ namespace PaperServerLauncher
 
         public class AikarFlag
         {
-            public bool enabled = false;
-            public int numValue = 0;
-            public string name = "";
-            public string strValue = "";
+            private bool Enabled {  get; set; }
+            public int NumValue { get; set; }
+            public string Name { get; set; }
+            public string StrValue { get; set; }
+
+            public AikarFlag(string name, bool enabled, int numValue, string strValue)
+            {
+                Name = name;
+                Enabled = enabled;
+                StrValue = strValue;
+                NumValue = numValue;
+            }
 
         }
 
@@ -51,7 +59,6 @@ namespace PaperServerLauncher
             public int maxTenuringThreshold = 1;
             public string usingAikarsFlags = "https://mcflags.emc.gs";
             public bool aikarsNewFlags = true;
-
         }
         
     }
