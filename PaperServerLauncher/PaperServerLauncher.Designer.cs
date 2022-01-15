@@ -126,7 +126,6 @@
             this.txtServerJar.Name = "txtServerJar";
             this.txtServerJar.Size = new System.Drawing.Size(254, 20);
             this.txtServerJar.TabIndex = 3;
-            this.txtServerJar.
             // 
             // btnBrowseJar
             // 
