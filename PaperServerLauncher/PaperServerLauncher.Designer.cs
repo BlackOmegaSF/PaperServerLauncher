@@ -126,6 +126,7 @@
             this.txtServerJar.Name = "txtServerJar";
             this.txtServerJar.Size = new System.Drawing.Size(254, 20);
             this.txtServerJar.TabIndex = 3;
+            this.txtServerJar.TextChanged += new System.EventHandler(this.txtServerJar_TextChanged);
             // 
             // btnBrowseJar
             // 
@@ -233,8 +234,8 @@
             this.txtPluginStatus.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.txtPluginStatus.Size = new System.Drawing.Size(308, 106);
             this.txtPluginStatus.TabIndex = 1;
-            this.txtPluginStatus.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
-            this.txtPluginStatus.GotFocus += new System.EventHandler(this.textBox1_GotFocus);
+            this.txtPluginStatus.TextChanged += new System.EventHandler(this.txtPluginStatus_TextChanged);
+            this.txtPluginStatus.GotFocus += new System.EventHandler(this.txtPluginStatus_GotFocus);
             // 
             // cbxUpdatePlugins
             // 

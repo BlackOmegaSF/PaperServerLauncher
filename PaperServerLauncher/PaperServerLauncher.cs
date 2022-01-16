@@ -93,13 +93,13 @@ namespace PaperServerLauncher
         //Hide text caret on plugin output text box
         [DllImport("user32.dll")]
         static extern bool HideCaret(IntPtr hWnd);
-        private void textBox1_TextChanged(object sender, EventArgs e)
+        private void txtPluginStatus_TextChanged(object sender, EventArgs e)
         {
             HideCaret(txtPluginStatus.Handle);
         }
 
         //Hide text caret on plugin output text box
-        private void textBox1_GotFocus(object sender, EventArgs e)
+        private void txtPluginStatus_GotFocus(object sender, EventArgs e)
         {
             HideCaret(txtPluginStatus.Handle);
         }
@@ -174,6 +174,15 @@ namespace PaperServerLauncher
 
             }
 
+        }
+
+        //Clear red color when text changed
+        private void txtServerJar_TextChanged(object sender, EventArgs e)
+        {
+            if (txtServerJar.BackColor == Color.Red)
+            {
+                txtServerJar.BackColor = Color.White;
+            }
         }
     }
 }
