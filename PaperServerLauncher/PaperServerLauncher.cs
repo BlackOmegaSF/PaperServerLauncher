@@ -95,13 +95,13 @@ namespace PaperServerLauncher
         static extern bool HideCaret(IntPtr hWnd);
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
-            HideCaret(textBox1.Handle);
+            HideCaret(txtPluginStatus.Handle);
         }
 
         //Hide text caret on plugin output text box
         private void textBox1_GotFocus(object sender, EventArgs e)
         {
-            HideCaret(textBox1.Handle);
+            HideCaret(txtPluginStatus.Handle);
         }
 
 
@@ -141,6 +141,43 @@ namespace PaperServerLauncher
                     numRAM.Value = (numRAM.Value - (numRAM.Value % 1024)) / 1024;
                     break;
             }
+        }
+
+        //Start Server button clicked
+        private void btnStartServer_Click(object sender, EventArgs e)
+        {
+            //Check if server jar file exists
+            //DEBUG - This is a test to see how directory.file existance works
+            if (File.Exists(txtServerJar.Text))
+            {
+                if (txtPluginStatus.Text != "")
+                {
+                    txtPluginStatus.AppendText(Environment.NewLine);
+                }
+                txtPluginStatus.AppendText("Server jar is a file and does exist");
+            }
+            else if (Directory.Exists(txtServerJar.Text))
+            {
+                if (txtPluginStatus.Text != "")
+                {
+                    txtPluginStatus.AppendText(Environment.NewLine);
+                }
+                txtPluginStatus.AppendText("Server jar is a directory and does exist");
+            }
+            else
+            {
+                if (txtPluginStatus.Text != "")
+                {
+                    txtPluginStatus.AppendText(Environment.NewLine);
+                }
+                txtPluginStatus.AppendText("Server jar does not exist");
+            }
+
+            if (cbxUpdatePlugins.Checked) //Plugins should be checked and updated
+            {
+
+            }
+
         }
     }
 }

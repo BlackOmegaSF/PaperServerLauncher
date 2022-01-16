@@ -45,7 +45,7 @@
             this.numRAM = new System.Windows.Forms.NumericUpDown();
             this.lblRAM = new System.Windows.Forms.Label();
             this.grpPlugins = new System.Windows.Forms.GroupBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.txtPluginStatus = new System.Windows.Forms.TextBox();
             this.cbxUpdatePlugins = new System.Windows.Forms.CheckBox();
             this.menuStrip1.SuspendLayout();
             this.grpJavaFlags.SuspendLayout();
@@ -61,6 +61,7 @@
             this.btnStartServer.TabIndex = 0;
             this.btnStartServer.Text = "Start Server";
             this.btnStartServer.UseVisualStyleBackColor = true;
+            this.btnStartServer.Click += new System.EventHandler(this.btnStartServer_Click);
             // 
             // menuStrip1
             // 
@@ -212,8 +213,9 @@
             // 
             // grpPlugins
             // 
-            this.grpPlugins.Controls.Add(this.textBox1);
+            this.grpPlugins.Controls.Add(this.txtPluginStatus);
             this.grpPlugins.Controls.Add(this.cbxUpdatePlugins);
+            this.grpPlugins.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.grpPlugins.Location = new System.Drawing.Point(12, 178);
             this.grpPlugins.Name = "grpPlugins";
             this.grpPlugins.Size = new System.Drawing.Size(320, 155);
@@ -221,20 +223,23 @@
             this.grpPlugins.TabStop = false;
             this.grpPlugins.Text = "Plugins";
             // 
-            // textBox1
+            // txtPluginStatus
             // 
-            this.textBox1.Location = new System.Drawing.Point(6, 43);
-            this.textBox1.Multiline = true;
-            this.textBox1.Name = "textBox1";
-            this.textBox1.ReadOnly = true;
-            this.textBox1.Size = new System.Drawing.Size(308, 106);
-            this.textBox1.TabIndex = 1;
-            this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
-            this.textBox1.GotFocus += new System.EventHandler(this.textBox1_GotFocus);
+            this.txtPluginStatus.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtPluginStatus.Location = new System.Drawing.Point(6, 43);
+            this.txtPluginStatus.Multiline = true;
+            this.txtPluginStatus.Name = "txtPluginStatus";
+            this.txtPluginStatus.ReadOnly = true;
+            this.txtPluginStatus.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.txtPluginStatus.Size = new System.Drawing.Size(308, 106);
+            this.txtPluginStatus.TabIndex = 1;
+            this.txtPluginStatus.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
+            this.txtPluginStatus.GotFocus += new System.EventHandler(this.textBox1_GotFocus);
             // 
             // cbxUpdatePlugins
             // 
             this.cbxUpdatePlugins.AutoSize = true;
+            this.cbxUpdatePlugins.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbxUpdatePlugins.Location = new System.Drawing.Point(7, 20);
             this.cbxUpdatePlugins.Name = "cbxUpdatePlugins";
             this.cbxUpdatePlugins.Size = new System.Drawing.Size(210, 17);
@@ -288,7 +293,7 @@
         private System.Windows.Forms.Label lblCurrentRam;
         private System.Windows.Forms.CheckBox cbxAikarsFlags;
         private System.Windows.Forms.GroupBox grpPlugins;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox txtPluginStatus;
         private System.Windows.Forms.CheckBox cbxUpdatePlugins;
     }
 }
