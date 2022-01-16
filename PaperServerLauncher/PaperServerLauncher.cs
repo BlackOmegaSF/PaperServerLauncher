@@ -147,22 +147,17 @@ namespace PaperServerLauncher
         private void btnStartServer_Click(object sender, EventArgs e)
         {
             //Check if server jar file exists
-            //DEBUG - This is a test to see how directory.file existance works
             if (File.Exists(txtServerJar.Text))
             {
-                if (txtPluginStatus.Text != "")
-                {
-                    txtPluginStatus.AppendText(Environment.NewLine);
-                }
-                txtPluginStatus.AppendText("Server jar is a file and does exist");
+                //TODO Continue with server starting
             }
-            else if (Directory.Exists(txtServerJar.Text))
+            if (Directory.Exists(txtServerJar.Text))
             {
                 if (txtPluginStatus.Text != "")
                 {
                     txtPluginStatus.AppendText(Environment.NewLine);
                 }
-                txtPluginStatus.AppendText("Server jar is a directory and does exist");
+                txtPluginStatus.AppendText("Error: Could not find server jar: Path is a directory");
             }
             else
             {
@@ -170,7 +165,8 @@ namespace PaperServerLauncher
                 {
                     txtPluginStatus.AppendText(Environment.NewLine);
                 }
-                txtPluginStatus.AppendText("Server jar does not exist");
+                txtPluginStatus.AppendText("Error: Could not find server jar");
+                txtServerJar.BackColor = Color.Red;
             }
 
             if (cbxUpdatePlugins.Checked) //Plugins should be checked and updated
