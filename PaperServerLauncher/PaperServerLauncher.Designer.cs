@@ -47,6 +47,7 @@
             this.grpPlugins = new System.Windows.Forms.GroupBox();
             this.txtPluginStatus = new System.Windows.Forms.TextBox();
             this.cbxUpdatePlugins = new System.Windows.Forms.CheckBox();
+            this.lblMinRam = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             this.grpJavaFlags.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numRAM)).BeginInit();
@@ -140,6 +141,7 @@
             // 
             // grpJavaFlags
             // 
+            this.grpJavaFlags.Controls.Add(this.lblMinRam);
             this.grpJavaFlags.Controls.Add(this.cbxAikarsFlags);
             this.grpJavaFlags.Controls.Add(this.lblCurrentRam);
             this.grpJavaFlags.Controls.Add(this.cbRamUnits);
@@ -248,6 +250,17 @@
             this.cbxUpdatePlugins.Text = "Automatically update supported plugins";
             this.cbxUpdatePlugins.UseVisualStyleBackColor = true;
             // 
+            // lblMinRam
+            // 
+            this.lblMinRam.AutoSize = true;
+            this.lblMinRam.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblMinRam.ForeColor = System.Drawing.Color.Red;
+            this.lblMinRam.Location = new System.Drawing.Point(178, 24);
+            this.lblMinRam.Name = "lblMinRam";
+            this.lblMinRam.Size = new System.Drawing.Size(112, 13);
+            this.lblMinRam.TabIndex = 10;
+            this.lblMinRam.Text = "Minimum RAM is 2GB!";
+            // 
             // ServerLauncher
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -296,6 +309,7 @@
         private System.Windows.Forms.GroupBox grpPlugins;
         private System.Windows.Forms.TextBox txtPluginStatus;
         private System.Windows.Forms.CheckBox cbxUpdatePlugins;
+        private System.Windows.Forms.Label lblMinRam;
     }
 }
 

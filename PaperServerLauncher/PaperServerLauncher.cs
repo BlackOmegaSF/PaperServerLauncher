@@ -82,7 +82,7 @@ namespace PaperServerLauncher
                 displayRecRam = recRam / (UInt64)Math.Pow(2, 30);
             }
             //Set label accordingly
-            lblCurrentRam.Text = "Recommend " + displayRecRam.ToString() + ramUnits + " of " + displayRAM.ToString() + ramUnits + " installed";
+            lblCurrentRam.Text = "Recommend " + displayRecRam.ToString() + ramUnits + " of " + displayRAM.ToString() + ramUnits + " installed (minimum 2GB)";
             if (updateNumUpDown)
             {
                 numRAM.Value = displayRecRam;
@@ -140,42 +140,82 @@ namespace PaperServerLauncher
                 case (int)Utils.Constants.UNIT_MODE_GB:
                     numRAM.Value = (numRAM.Value - (numRAM.Value % 1024)) / 1024;
                     break;
+                default:
+                    Console.WriteLine("Error: bad index selected for units");
+                    break;
             }
         }
 
         //Start Server button clicked
         private void btnStartServer_Click(object sender, EventArgs e)
         {
-            //Check if server jar file exists
-            if (File.Exists(txtServerJar.Text))
+            try
             {
-                //TODO Continue with server starting
-            }
-            else if (Directory.Exists(txtServerJar.Text))
-            {
-                if (txtPluginStatus.Text != "")
+                //Disable start server button
+                btnStartServer.Enabled = false;
+
+                //Clear previous output
+                txtPluginStatus.Text = "";
+
+                //Check if server jar file exists
+                if (File.Exists(txtServerJar.Text)) //server jar is file and exists
                 {
-                    txtPluginStatus.AppendText(Environment.NewLine);
+                    //Continue with server starting
                 }
-                txtPluginStatus.AppendText("Error: Could not find server jar: Path is a directory");
-                txtServerJar.BackColor = Color.Red;
-                return;
-            }
-            else
-            {
-                if (txtPluginStatus.Text != "")
+                else if (Directory.Exists(txtServerJar.Text)) //server jar is directory and exists
                 {
-                    txtPluginStatus.AppendText(Environment.NewLine);
+                    if (txtPluginStatus.Text != "")
+                    {
+                        txtPluginStatus.AppendText(Environment.NewLine);
+                    }
+                    txtPluginStatus.AppendText("Error: Could not find server jar: Path is a directory");
+                    txtServerJar.BackColor = Color.Red;
+                    return;
                 }
-                txtPluginStatus.AppendText("Error: Could not find server jar");
-                txtServerJar.BackColor = Color.Red;
-                return;
+                else //server jar doesn't exist
+                {
+                    if (txtPluginStatus.Text != "")
+                    {
+                        txtPluginStatus.AppendText(Environment.NewLine);
+                    }
+                    txtPluginStatus.AppendText("Error: Could not find server jar");
+                    txtServerJar.BackColor = Color.Red;
+                    return;
+                }
+
+                //Check if min RAM is met
+                int minRamAdjusted;
+                switch (cbRamUnits.SelectedIndex)
+                {
+                    case (int)Utils.Constants.UNIT_MODE_MB:
+                        minRamAdjusted = (int)Utils.Constants.MIN_RAM_MB;
+                        break;
+                    case (int)Utils.Constants.UNIT_MODE_GB:
+                        minRamAdjusted = (int)Utils.Constants.MIN_RAM_GB;
+                        break;
+                    default:
+                        txtPluginStatus.AppendText("Error: bad index selected for units");
+                        return;
+                }
+                if (numRAM.Value < minRamAdjusted)
+                {
+                    txtPluginStatus.AppendText("Error: Minimum RAM is 2GB");
+                    return;
+                }
+
+                //TODO Continue starting process
+
+                if (cbxUpdatePlugins.Checked) //Plugins should be checked and updated
+                {
+
+                }
+            }
+            finally
+            {
+                btnStartServer.Enabled = true;
             }
 
-            if (cbxUpdatePlugins.Checked) //Plugins should be checked and updated
-            {
 
-            }
 
         }
 

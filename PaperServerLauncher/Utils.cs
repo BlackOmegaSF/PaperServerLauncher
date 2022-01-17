@@ -12,7 +12,9 @@ namespace PaperServerLauncher
         public enum Constants
         {
             UNIT_MODE_MB = 0,
-            UNIT_MODE_GB = 1
+            UNIT_MODE_GB = 1,
+            MIN_RAM_GB = 2,
+            MIN_RAM_MB = MIN_RAM_GB * 1024
         }
 
         public static class Maths
