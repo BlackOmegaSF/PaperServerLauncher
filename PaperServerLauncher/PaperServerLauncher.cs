@@ -151,13 +151,15 @@ namespace PaperServerLauncher
             {
                 //TODO Continue with server starting
             }
-            if (Directory.Exists(txtServerJar.Text))
+            else if (Directory.Exists(txtServerJar.Text))
             {
                 if (txtPluginStatus.Text != "")
                 {
                     txtPluginStatus.AppendText(Environment.NewLine);
                 }
                 txtPluginStatus.AppendText("Error: Could not find server jar: Path is a directory");
+                txtServerJar.BackColor = Color.Red;
+                return;
             }
             else
             {
@@ -167,6 +169,7 @@ namespace PaperServerLauncher
                 }
                 txtPluginStatus.AppendText("Error: Could not find server jar");
                 txtServerJar.BackColor = Color.Red;
+                return;
             }
 
             if (cbxUpdatePlugins.Checked) //Plugins should be checked and updated
