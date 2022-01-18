@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using System.Management;
 using System.Runtime.InteropServices;
 using System.IO;
+using static PaperServerLauncher.Utils;
 
 namespace PaperServerLauncher
 {
@@ -18,7 +19,7 @@ namespace PaperServerLauncher
         public ServerLauncher()
         {
             InitializeComponent();
-            cbRamUnits.SelectedIndex = 1;
+            cbRamUnits.SelectedIndex = (int)Constants.UNIT_MODE_MB;
 
             //TODO Load and apply settings
 
@@ -69,13 +70,13 @@ namespace PaperServerLauncher
             UInt64 displayRAM = 0;
             UInt64 displayRecRam = 0;
             string ramUnits = "";
-            if (unitMode == (int)Utils.Constants.UNIT_MODE_MB)
+            if (unitMode == (int)Constants.UNIT_MODE_MB)
             {
                 ramUnits = "MB";
                 displayRAM = ramBytes / (UInt64)Math.Pow(2, 20);
                 displayRecRam = recRam / (UInt64)Math.Pow(2, 20);
             } 
-            else if (unitMode == (int)Utils.Constants.UNIT_MODE_GB)
+            else if (unitMode == (int)Constants.UNIT_MODE_GB)
             {
                 ramUnits = "GB";
                 displayRAM = ramBytes / (UInt64)Math.Pow(2, 30);
@@ -87,6 +88,13 @@ namespace PaperServerLauncher
             {
                 numRAM.Value = displayRecRam;
             }
+            //Change minimum RAM label units
+            string minRAMText = "Minimum RAM is";
+            if (unitMode == (int)Constants.UNIT_MODE_MB)
+            {
+                minRAMText.Append("");
+            }
+            
         }
 
 
@@ -133,11 +141,11 @@ namespace PaperServerLauncher
             //Calculate and update numRam
             switch (cbRamUnits.SelectedIndex)
             {
-                case (int)Utils.Constants.UNIT_MODE_MB:
+                case (int)Constants.UNIT_MODE_MB:
                     numRAM.Value *= 1024;
                     break;
 
-                case (int)Utils.Constants.UNIT_MODE_GB:
+                case (int)Constants.UNIT_MODE_GB:
                     numRAM.Value = (numRAM.Value - (numRAM.Value % 1024)) / 1024;
                     break;
                 default:
@@ -187,11 +195,11 @@ namespace PaperServerLauncher
                 int minRamAdjusted;
                 switch (cbRamUnits.SelectedIndex)
                 {
-                    case (int)Utils.Constants.UNIT_MODE_MB:
-                        minRamAdjusted = (int)Utils.Constants.MIN_RAM_MB;
+                    case (int)Constants.UNIT_MODE_MB:
+                        minRamAdjusted = (int)Constants.MIN_RAM_MB;
                         break;
-                    case (int)Utils.Constants.UNIT_MODE_GB:
-                        minRamAdjusted = (int)Utils.Constants.MIN_RAM_GB;
+                    case (int)Constants.UNIT_MODE_GB:
+                        minRamAdjusted = (int)Constants.MIN_RAM_GB;
                         break;
                     default:
                         txtPluginStatus.AppendText("Error: bad index selected for units");
@@ -200,6 +208,7 @@ namespace PaperServerLauncher
                 if (numRAM.Value < minRamAdjusted)
                 {
                     txtPluginStatus.AppendText("Error: Minimum RAM is 2GB");
+                    lblMinRam.Visible = true;
                     return;
                 }
 

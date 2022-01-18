@@ -260,6 +260,7 @@
             this.lblMinRam.Size = new System.Drawing.Size(112, 13);
             this.lblMinRam.TabIndex = 10;
             this.lblMinRam.Text = "Minimum RAM is 2GB!";
+            this.lblMinRam.Visible = false;
             // 
             // ServerLauncher
             // 
