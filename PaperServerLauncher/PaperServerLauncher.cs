@@ -69,23 +69,35 @@ namespace PaperServerLauncher
                 }
                 return;
             }
-            UInt64 displayRAM = 0;
+            string displayRAM = "?";
             UInt64 displayRecRam = 0;
             string ramUnits = "";
             if (unitMode == Constants.UNIT_MODE_MB)
             {
                 ramUnits = "MB";
-                displayRAM = ramBytes / (UInt64)Math.Pow(2, 20);
+                displayRAM = (ramBytes / (UInt64)Math.Pow(2, 20)).ToString();
                 displayRecRam = recRam / (UInt64)Math.Pow(2, 20);
             } 
             else if (unitMode == Constants.UNIT_MODE_GB)
             {
                 ramUnits = "GB";
-                displayRAM = ramBytes / (UInt64)Math.Pow(2, 30);
+                displayRAM = (ramBytes / (UInt64)Math.Pow(2, 30)).ToString();
                 displayRecRam = recRam / (UInt64)Math.Pow(2, 30);
             }
+            else
+            {
+                Console.WriteLine("Error: invalid unit mode");
+            }
+            string displayMinRAM = "?";
+            try
+            {
+                displayMinRAM = Formatters.getMinRamString(unitMode);
+            } catch (ArgumentOutOfRangeException)
+            {
+                Console.WriteLine("Error: invalid unit mode");
+            }
             //Set label accordingly
-            lblCurrentRam.Text = "Recommend " + displayRecRam.ToString() + ramUnits + " of " + displayRAM.ToString() + ramUnits + " installed (minimum 2GB)";
+            lblCurrentRam.Text = "Recommend " + displayRecRam.ToString() + ramUnits + " of " + displayRAM.ToString() + ramUnits + " installed (minimum " + displayMinRAM + ")";
             if (updateNumUpDown)
             {
                 numRAM.Value = displayRecRam;
@@ -214,7 +226,7 @@ namespace PaperServerLauncher
                 }
                 if (numRAM.Value < minRamAdjusted)
                 {
-                    txtPluginStatus.AppendText("Error: Minimum RAM is 2GB");
+                    txtPluginStatus.AppendText("Error: Minimum RAM is " + Formatters.getMinRamString(cbRamUnits.SelectedIndex));
                     lblMinRam.Visible = true;
                     return;
                 }
