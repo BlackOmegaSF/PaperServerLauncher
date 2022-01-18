@@ -187,6 +187,9 @@ namespace PaperServerLauncher
                 //Grab states of boxes just in case
                 string serverJarPath = txtServerJar.Text;
                 int unitMode = cbRamUnits.SelectedIndex;
+                int numRAMValue = (int)numRAM.Value;
+                bool useAikarsFlags = cbxAikarsFlags.Checked;
+                bool updatePlugins = cbxUpdatePlugins.Checked;
 
                 //Check if server jar file exists
                 if (File.Exists(serverJarPath)) //server jar is file and exists
@@ -224,7 +227,7 @@ namespace PaperServerLauncher
                     txtPluginStatus.AppendText("Error: bad index selected for units");
                     return;
                 }
-                if (numRAM.Value < minRamAdjusted)
+                if (numRAMValue < minRamAdjusted)
                 {
                     txtPluginStatus.AppendText("Error: Minimum RAM is " + Formatters.getMinRamString(cbRamUnits.SelectedIndex));
                     lblMinRam.Visible = true;
@@ -233,7 +236,7 @@ namespace PaperServerLauncher
 
                 //TODO Continue starting process
 
-                if (cbxUpdatePlugins.Checked) //Plugins should be checked and updated
+                if (updatePlugins) //Plugins should be checked and updated
                 {
 
                 }
