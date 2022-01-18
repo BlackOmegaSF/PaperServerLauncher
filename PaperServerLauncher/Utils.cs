@@ -29,6 +29,37 @@ namespace PaperServerLauncher
 
         }
 
+        public static class Formatters
+        {
+            public static int getMinRam(int unitMode)
+            {
+                switch (unitMode)
+                {
+                    case Constants.UNIT_MODE_MB:
+                        return Constants.MIN_RAM_MB;
+
+                    case Constants.UNIT_MODE_GB:
+                        return Constants.MIN_RAM_GB;
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(unitMode));
+                }
+            }
+
+            public static string getMinRamString(int unitMode)
+            {
+                switch (unitMode)
+                {
+                    case Constants.UNIT_MODE_MB:
+                        return Constants.MIN_RAM_MB.ToString() + "MB";
+
+                    case Constants.UNIT_MODE_GB:
+                        return Constants.MIN_RAM_GB.ToString() + "GB";
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(unitMode));
+                }
+            }
+        }
+
         public class AikarFlag
         {
             private bool Enabled {  get; set; }
