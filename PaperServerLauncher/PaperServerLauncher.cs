@@ -89,12 +89,20 @@ namespace PaperServerLauncher
                 numRAM.Value = displayRecRam;
             }
             //Change minimum RAM label units
-            string minRAMText = "Minimum RAM is";
-            if (unitMode == (int)Constants.UNIT_MODE_MB)
+            StringBuilder minRAMText = new StringBuilder("Minimum RAM is ");
+            if (unitMode == Constants.UNIT_MODE_MB)
             {
-                minRAMText.Append("");
+                minRAMText.Append("2048MB");
             }
-            
+            else if (unitMode == Constants.UNIT_MODE_GB)
+            {
+                minRAMText.Append("2GB");
+            }
+            else
+            {
+                Console.WriteLine("Error: invalid unit mode");
+            }
+            lblMinRam.Text = minRAMText.ToString();
         }
 
 
