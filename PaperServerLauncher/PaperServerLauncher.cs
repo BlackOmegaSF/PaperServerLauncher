@@ -168,6 +168,7 @@ namespace PaperServerLauncher
 
                 //Clear previous output
                 txtPluginStatus.Text = "";
+                lblMinRam.Visible = false;
 
                 //Check if server jar file exists
                 if (File.Exists(txtServerJar.Text)) //server jar is file and exists
@@ -239,6 +240,12 @@ namespace PaperServerLauncher
             {
                 txtServerJar.BackColor = Color.White;
             }
+        }
+
+        //Clear min ram label when value changes
+        private void numRAM_ValueChanged(object sender, EventArgs e)
+        {
+            lblMinRam.Visible = false;
         }
     }
 }

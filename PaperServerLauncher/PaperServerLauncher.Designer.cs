@@ -202,6 +202,7 @@
             this.numRAM.Name = "numRAM";
             this.numRAM.Size = new System.Drawing.Size(73, 20);
             this.numRAM.TabIndex = 6;
+            this.numRAM.ValueChanged += new System.EventHandler(this.numRAM_ValueChanged);
             this.numRAM.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.numRAM_KeyPress);
             // 
             // lblRAM
