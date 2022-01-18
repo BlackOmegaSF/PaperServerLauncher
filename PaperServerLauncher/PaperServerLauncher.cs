@@ -11,6 +11,8 @@ using System.Management;
 using System.Runtime.InteropServices;
 using System.IO;
 using static PaperServerLauncher.Utils;
+using System.IO.Compression;
+using Newtonsoft.Json;
 
 namespace PaperServerLauncher
 {
@@ -189,30 +191,28 @@ namespace PaperServerLauncher
                 int unitMode = cbRamUnits.SelectedIndex;
                 int numRAMValue = (int)numRAM.Value;
                 bool useAikarsFlags = cbxAikarsFlags.Checked;
-                bool updatePlugins = cbxUpdatePlugins.Checked;
+                bool updatePluginsChecked = cbxUpdatePlugins.Checked;
+
+                //Grab original working dir to restore to when needed
+                string originalWorkingDir = Directory.GetCurrentDirectory();
 
                 //Check if server jar file exists
+                txtPluginStatus.AppendText("Checking server jar file...");
                 if (File.Exists(serverJarPath)) //server jar is file and exists
                 {
-                    //Continue with server starting
+                    //Convert path to full, non-relative path and continue with server starting
+                    txtPluginStatus.AppendText("\nFound valid server jar");
+                    serverJarPath = Path.GetFullPath(serverJarPath);
                 }
                 else if (Directory.Exists(serverJarPath)) //server jar is directory and exists
                 {
-                    if (txtPluginStatus.Text != "")
-                    {
-                        txtPluginStatus.AppendText(Environment.NewLine);
-                    }
-                    txtPluginStatus.AppendText("Error: Could not find server jar: Path is a directory");
+                    txtPluginStatus.AppendText("\nError: Could not find server jar: Path is a directory");
                     txtServerJar.BackColor = Color.Red;
                     return;
                 }
                 else //server jar doesn't exist
                 {
-                    if (txtPluginStatus.Text != "")
-                    {
-                        txtPluginStatus.AppendText(Environment.NewLine);
-                    }
-                    txtPluginStatus.AppendText("Error: Could not find server jar");
+                    txtPluginStatus.AppendText("\nError: Could not find server jar");
                     txtServerJar.BackColor = Color.Red;
                     return;
                 }
@@ -224,22 +224,35 @@ namespace PaperServerLauncher
                     minRamAdjusted = Formatters.getMinRam(unitMode);
                 } catch (ArgumentOutOfRangeException)
                 {
-                    txtPluginStatus.AppendText("Error: bad index selected for units");
+                    txtPluginStatus.AppendText("\nError: bad index selected for units");
                     return;
                 }
+
                 if (numRAMValue < minRamAdjusted)
                 {
-                    txtPluginStatus.AppendText("Error: Minimum RAM is " + Formatters.getMinRamString(cbRamUnits.SelectedIndex));
+                    txtPluginStatus.AppendText("\nError: Minimum RAM is " + Formatters.getMinRamString(cbRamUnits.SelectedIndex));
                     lblMinRam.Visible = true;
                     return;
                 }
 
+                if (updatePluginsChecked) //Plugins should be checked and updated
+                {
+                    try
+                    {
+                        updatePlugins(new FileInfo(serverJarPath).Directory.FullName);
+                    } catch (DirectoryNotFoundException)
+                    {
+                        txtPluginStatus.AppendText("\nPlugins directory not found, could not update plugins.");
+                        return;
+                    } finally
+                    {
+                        //TODO Clean up created folders/etc and switch back to original working dir
+                    }
+                }
+
                 //TODO Continue starting process
 
-                if (updatePlugins) //Plugins should be checked and updated
-                {
-
-                }
+                
             }
             finally
             {
@@ -249,6 +262,71 @@ namespace PaperServerLauncher
 
 
         }
+
+        private void updatePlugins(string serverDir)
+        {
+            string pluginsFolder = Path.Combine(serverDir, "plugins");
+
+            //If plugins folder doesn't exist, throw exception
+            if (!Directory.Exists(pluginsFolder))
+            {
+                throw new DirectoryNotFoundException();
+            }
+
+            //Set working directory
+            Directory.SetCurrentDirectory(pluginsFolder);
+
+            string[] plugins = Directory.GetFiles(pluginsFolder, "*.jar");
+            string tempDir = "";
+            if(plugins.Length > 0)
+            {
+                //Create directory to extract into for evaluation
+                tempDir = Directory.CreateDirectory("BlackOmegaUpdater").FullName;
+            }
+            foreach (string plugin in plugins) //Traverse the found jar files and extract info file if present
+            {
+                if (File.Exists(plugin))
+                {
+                    string pluginFileName = Path.GetFileNameWithoutExtension(plugin);
+                    try
+                    {
+                        using (ZipArchive pluginArchive = ZipFile.OpenRead(plugin)) //Open the plugin as zip file
+                        {
+                            foreach (ZipArchiveEntry entry in pluginArchive.Entries) //Traverse each file in the plugin
+                            {
+                                if (entry.Name.Equals(Constants.UPDATER_INFO_FILE_NAME, StringComparison.OrdinalIgnoreCase)) //Match and ignore case
+                                {
+                                    string destinationPath = Path.GetFullPath(Path.Combine(tempDir, pluginFileName + ".json"));
+                                    if (destinationPath.StartsWith(tempDir, StringComparison.Ordinal))
+                                    {
+                                        entry.ExtractToFile(destinationPath);
+                                        txtPluginStatus.AppendText("\nExtracted " + pluginFileName);
+                                    }
+                                }
+                            }
+                        }
+                    } catch (IOException)
+                    {
+                        txtPluginStatus.AppendText("\nError: Could not update plugin " + pluginFileName + "\n - IOException");
+                    }
+                }
+            }
+            //Process extracted info files
+            string[] updateInfoFiles = Directory.GetFiles(tempDir, "*.json");
+            foreach (string updateInfoFile in updateInfoFiles)
+            {
+                using (StreamReader r = new StreamReader(updateInfoFile))
+                {
+                    string json = r.ReadToEnd();
+                    Utils.UpdateInfoItem item = JsonConvert.DeserializeObject<Utils.UpdateInfoItem>(json);
+
+                    //TODO Check if update is needed
+                }
+            }
+
+
+        }
+
 
         //Clear red color when text changed
         private void txtServerJar_TextChanged(object sender, EventArgs e)

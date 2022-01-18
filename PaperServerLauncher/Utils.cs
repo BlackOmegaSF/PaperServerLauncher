@@ -15,6 +15,7 @@ namespace PaperServerLauncher
             public const int UNIT_MODE_GB = 1;
             public const int MIN_RAM_GB = 2;
             public const int MIN_RAM_MB = MIN_RAM_GB * 1024;
+            public const string UPDATER_INFO_FILE_NAME = "BlackOmegaUpdaterInfo.json";
         }
 
         public static class Maths
@@ -58,6 +59,14 @@ namespace PaperServerLauncher
                         throw new ArgumentOutOfRangeException(nameof(unitMode));
                 }
             }
+        }
+
+        public class UpdateInfoItem
+        {
+            public string id;
+            public string version;
+            public string owner;
+            public string repo;
         }
 
         public class AikarFlag
