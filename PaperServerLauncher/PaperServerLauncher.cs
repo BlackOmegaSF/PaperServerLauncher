@@ -30,6 +30,8 @@ namespace PaperServerLauncher
         private void numRAM_KeyPress(object sender, KeyPressEventArgs e)
         {
             e.Handled = !char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar);
+            //Clear min ram label when value changes
+            lblMinRam.Visible = false;
         }
 
         private void updateRamUnits(int unitMode, bool updateNumUpDown)
