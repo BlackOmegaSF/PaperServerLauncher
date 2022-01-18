@@ -184,12 +184,16 @@ namespace PaperServerLauncher
                 txtPluginStatus.Text = "";
                 lblMinRam.Visible = false;
 
+                //Grab states of boxes just in case
+                string serverJarPath = txtServerJar.Text;
+                int unitMode = cbRamUnits.SelectedIndex;
+
                 //Check if server jar file exists
-                if (File.Exists(txtServerJar.Text)) //server jar is file and exists
+                if (File.Exists(serverJarPath)) //server jar is file and exists
                 {
                     //Continue with server starting
                 }
-                else if (Directory.Exists(txtServerJar.Text)) //server jar is directory and exists
+                else if (Directory.Exists(serverJarPath)) //server jar is directory and exists
                 {
                     if (txtPluginStatus.Text != "")
                     {
@@ -212,17 +216,13 @@ namespace PaperServerLauncher
 
                 //Check if min RAM is met
                 int minRamAdjusted;
-                switch (cbRamUnits.SelectedIndex)
+                try
                 {
-                    case Constants.UNIT_MODE_MB:
-                        minRamAdjusted = Constants.MIN_RAM_MB;
-                        break;
-                    case Constants.UNIT_MODE_GB:
-                        minRamAdjusted = Constants.MIN_RAM_GB;
-                        break;
-                    default:
-                        txtPluginStatus.AppendText("Error: bad index selected for units");
-                        return;
+                    minRamAdjusted = Formatters.getMinRam(unitMode);
+                } catch (ArgumentOutOfRangeException)
+                {
+                    txtPluginStatus.AppendText("Error: bad index selected for units");
+                    return;
                 }
                 if (numRAM.Value < minRamAdjusted)
                 {
