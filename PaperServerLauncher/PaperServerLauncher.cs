@@ -19,7 +19,7 @@ namespace PaperServerLauncher
         public ServerLauncher()
         {
             InitializeComponent();
-            cbRamUnits.SelectedIndex = (int)Constants.UNIT_MODE_MB;
+            cbRamUnits.SelectedIndex = Constants.UNIT_MODE_MB;
 
             //TODO Load and apply settings
 
@@ -70,13 +70,13 @@ namespace PaperServerLauncher
             UInt64 displayRAM = 0;
             UInt64 displayRecRam = 0;
             string ramUnits = "";
-            if (unitMode == (int)Constants.UNIT_MODE_MB)
+            if (unitMode == Constants.UNIT_MODE_MB)
             {
                 ramUnits = "MB";
                 displayRAM = ramBytes / (UInt64)Math.Pow(2, 20);
                 displayRecRam = recRam / (UInt64)Math.Pow(2, 20);
             } 
-            else if (unitMode == (int)Constants.UNIT_MODE_GB)
+            else if (unitMode == Constants.UNIT_MODE_GB)
             {
                 ramUnits = "GB";
                 displayRAM = ramBytes / (UInt64)Math.Pow(2, 30);
@@ -149,11 +149,11 @@ namespace PaperServerLauncher
             //Calculate and update numRam
             switch (cbRamUnits.SelectedIndex)
             {
-                case (int)Constants.UNIT_MODE_MB:
+                case Constants.UNIT_MODE_MB:
                     numRAM.Value *= 1024;
                     break;
 
-                case (int)Constants.UNIT_MODE_GB:
+                case Constants.UNIT_MODE_GB:
                     numRAM.Value = (numRAM.Value - (numRAM.Value % 1024)) / 1024;
                     break;
                 default:
@@ -203,11 +203,11 @@ namespace PaperServerLauncher
                 int minRamAdjusted;
                 switch (cbRamUnits.SelectedIndex)
                 {
-                    case (int)Constants.UNIT_MODE_MB:
-                        minRamAdjusted = (int)Constants.MIN_RAM_MB;
+                    case Constants.UNIT_MODE_MB:
+                        minRamAdjusted = Constants.MIN_RAM_MB;
                         break;
-                    case (int)Constants.UNIT_MODE_GB:
-                        minRamAdjusted = (int)Constants.MIN_RAM_GB;
+                    case Constants.UNIT_MODE_GB:
+                        minRamAdjusted = Constants.MIN_RAM_GB;
                         break;
                     default:
                         txtPluginStatus.AppendText("Error: bad index selected for units");
