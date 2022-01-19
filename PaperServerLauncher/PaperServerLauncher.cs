@@ -348,7 +348,31 @@ namespace PaperServerLauncher
                         {
                             txtPluginStatus.AppendText("\r\nPlugin " + item.id + " is outdated, updating...");
 
-                            //TODO update plugin
+                            //Download updated plugin file
+                            string downloadPath = Path.Combine(tempDir, Path.GetFileNameWithoutExtension(updateInfoFile), ".jar");
+                            WebClient webClient = new WebClient();
+                            webClient.DownloadFile(info.downloadUrl, downloadPath);
+                            //If it downloaded, move the downloaded file to plugins and overwrite
+                            if (File.Exists(downloadPath))
+                            {
+                                try
+                                {
+                                    string pluginPath = Path.Combine(pluginsFolder, Path.GetFileNameWithoutExtension(updateInfoFile), ".jar");
+                                    if (File.Exists(pluginPath))
+                                    {
+                                        File.Delete(pluginPath);
+                                    }
+                                    File.Move(downloadPath, pluginPath);
+                                } catch (Exception)
+                                {
+                                    txtPluginStatus.AppendText("\r\nError writing downloaded plugin " + item.id);
+                                }
+                            }
+                            else
+                            {
+                                txtPluginStatus.AppendText("\r\nError downloading update for plugin " + item.id);
+                                continue;
+                            }
 
                         }
                         else //Plugin is up to date
