@@ -1,6 +1,9 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -16,6 +19,7 @@ namespace PaperServerLauncher
             public const int MIN_RAM_GB = 2;
             public const int MIN_RAM_MB = MIN_RAM_GB * 1024;
             public const string UPDATER_INFO_FILE_NAME = "BlackOmegaUpdaterInfo.json";
+            public const string GITHUB_BASE_RELEASES_URL = "https://api.github.com/repos/";
         }
 
         public static class Maths
@@ -58,6 +62,48 @@ namespace PaperServerLauncher
                     default:
                         throw new ArgumentOutOfRangeException(nameof(unitMode));
                 }
+            }
+        }
+
+        public class RepoInfo
+        {
+            public string name;
+            public string releaseTag;
+            public string downloadUrl;
+
+            public RepoInfo(string name, string releaseTag, string downloadUrl)
+            {
+                this.name = name;
+                this.releaseTag = releaseTag;
+                this.downloadUrl = downloadUrl;
+            }
+        }
+
+        public static class NetworkUtils
+        {
+            public static RepoInfo GetLatestRelease(string owner, string repo)
+            {
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Constants.GITHUB_BASE_RELEASES_URL + owner + "/" + repo + "/releases/latest");
+                request.Method = "GET";
+                request.Accept = "application/vnd.github.v3+json";
+
+                WebResponse response = request.GetResponse();
+                //Check response status
+                if (((HttpWebResponse)response).StatusCode == HttpStatusCode.OK)
+                {
+                    using (Stream dataStream = response.GetResponseStream())
+                    {
+                        StreamReader reader = new StreamReader(dataStream);
+                        JObject jsonResponse = JObject.Parse(reader.ReadToEnd());
+                        response.Close();
+                        return new RepoInfo(repo, (string)jsonResponse["tag_name"], (string)jsonResponse["assets"][0]["browser_download_url"]);
+                    }
+                } 
+                else
+                {
+                    throw new HttpListenerException((int)((HttpWebResponse)response).StatusCode, ((HttpWebResponse)response).StatusDescription);
+                }
+
             }
         }
 

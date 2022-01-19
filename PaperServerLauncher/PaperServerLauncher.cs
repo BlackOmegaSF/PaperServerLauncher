@@ -321,6 +321,10 @@ namespace PaperServerLauncher
                     Utils.UpdateInfoItem item = JsonConvert.DeserializeObject<Utils.UpdateInfoItem>(json);
 
                     //TODO Check if update is needed
+
+                    //Get latest version tag from Github
+
+
                 }
             }
 
