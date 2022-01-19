@@ -87,6 +87,7 @@ namespace PaperServerLauncher
                 HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Constants.GITHUB_BASE_RELEASES_URL + owner + "/" + repo + "/releases/latest");
                 request.Method = "GET";
                 request.Accept = "application/vnd.github.v3+json";
+                request.UserAgent = "BlackOmegaSF";
 
                 WebResponse response = request.GetResponse();
                 //Check response status
