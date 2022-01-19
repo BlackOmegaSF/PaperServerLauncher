@@ -249,6 +249,20 @@ namespace PaperServerLauncher
                     } finally
                     {
                         //TODO Clean up created folders/etc and switch back to original working dir
+                        string pluginsFolder = Path.Combine(new FileInfo(serverJarPath).Directory.FullName, "plugins");
+                        string tempDir = Path.Combine(pluginsFolder, "BlackOmegaUpdater");
+                        if (Directory.Exists(pluginsFolder) && Directory.Exists(tempDir))
+                        {
+                            try
+                            {
+                                Directory.Delete(tempDir, true);
+                            } catch (Exception)
+                            {
+                                //Welp, I tried
+                            }
+                            
+                        }
+                        Directory.SetCurrentDirectory(new FileInfo(serverJarPath).Directory.FullName);
                     }
                 }
 
@@ -349,7 +363,7 @@ namespace PaperServerLauncher
                             txtPluginStatus.AppendText("\r\nPlugin " + item.id + " is outdated, updating...");
 
                             //Download updated plugin file
-                            string downloadPath = Path.Combine(tempDir, Path.GetFileNameWithoutExtension(updateInfoFile), ".jar");
+                            string downloadPath = Path.Combine(tempDir, Path.GetFileNameWithoutExtension(updateInfoFile) + ".jar");
                             WebClient webClient = new WebClient();
                             webClient.DownloadFile(info.downloadUrl, downloadPath);
                             //If it downloaded, move the downloaded file to plugins and overwrite
@@ -357,7 +371,7 @@ namespace PaperServerLauncher
                             {
                                 try
                                 {
-                                    string pluginPath = Path.Combine(pluginsFolder, Path.GetFileNameWithoutExtension(updateInfoFile), ".jar");
+                                    string pluginPath = Path.Combine(pluginsFolder, Path.GetFileNameWithoutExtension(updateInfoFile) + ".jar");
                                     if (File.Exists(pluginPath))
                                     {
                                         File.Delete(pluginPath);
