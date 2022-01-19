@@ -203,18 +203,18 @@ namespace PaperServerLauncher
                 if (File.Exists(serverJarPath)) //server jar is file and exists
                 {
                     //Convert path to full, non-relative path and continue with server starting
-                    txtPluginStatus.AppendText("\nFound valid server jar");
+                    txtPluginStatus.AppendText("\r\nFound valid server jar");
                     serverJarPath = Path.GetFullPath(serverJarPath);
                 }
                 else if (Directory.Exists(serverJarPath)) //server jar is directory and exists
                 {
-                    txtPluginStatus.AppendText("\nError: Could not find server jar: Path is a directory");
+                    txtPluginStatus.AppendText("\r\nError: Could not find server jar: Path is a directory");
                     txtServerJar.BackColor = Color.Red;
                     return;
                 }
                 else //server jar doesn't exist
                 {
-                    txtPluginStatus.AppendText("\nError: Could not find server jar");
+                    txtPluginStatus.AppendText("\r\nError: Could not find server jar");
                     txtServerJar.BackColor = Color.Red;
                     return;
                 }
@@ -226,13 +226,13 @@ namespace PaperServerLauncher
                     minRamAdjusted = Formatters.getMinRam(unitMode);
                 } catch (ArgumentOutOfRangeException)
                 {
-                    txtPluginStatus.AppendText("\nError: bad index selected for units");
+                    txtPluginStatus.AppendText("\r\nError: bad index selected for units");
                     return;
                 }
 
                 if (numRAMValue < minRamAdjusted)
                 {
-                    txtPluginStatus.AppendText("\nError: Minimum RAM is " + Formatters.getMinRamString(cbRamUnits.SelectedIndex));
+                    txtPluginStatus.AppendText("\r\nError: Minimum RAM is " + Formatters.getMinRamString(cbRamUnits.SelectedIndex));
                     lblMinRam.Visible = true;
                     return;
                 }
@@ -244,7 +244,7 @@ namespace PaperServerLauncher
                         updatePlugins(new FileInfo(serverJarPath).Directory.FullName);
                     } catch (DirectoryNotFoundException)
                     {
-                        txtPluginStatus.AppendText("\nPlugins directory not found, could not update plugins.");
+                        txtPluginStatus.AppendText("\r\nPlugins directory not found, could not update plugins.");
                         return;
                     } finally
                     {
@@ -316,14 +316,14 @@ namespace PaperServerLauncher
                                     if (destinationPath.StartsWith(tempDir, StringComparison.Ordinal))
                                     {
                                         entry.ExtractToFile(destinationPath);
-                                        txtPluginStatus.AppendText("\nExtracted " + pluginFileName);
+                                        txtPluginStatus.AppendText("\r\nExtracted " + pluginFileName);
                                     }
                                 }
                             }
                         }
                     } catch (IOException)
                     {
-                        txtPluginStatus.AppendText("\nError: Could not update plugin " + pluginFileName + "\n - IOException");
+                        txtPluginStatus.AppendText("\r\nError: Could not update plugin " + pluginFileName + "\r\n - IOException");
                         continue;
                     }
                 }
@@ -346,24 +346,24 @@ namespace PaperServerLauncher
                         Version latestVersion = new Version(info.releaseTag);
                         if (existingVersion.CompareTo(latestVersion) <= 0) //Current version is older and needs to be updated
                         {
-                            txtPluginStatus.AppendText("\nPlugin " + item.id + " is outdated, updating...");
+                            txtPluginStatus.AppendText("\r\nPlugin " + item.id + " is outdated, updating...");
 
                             //TODO update plugin
 
                         }
                         else //Plugin is up to date
                         {
-                            txtPluginStatus.AppendText("\nPlugin " + item.id + " is up to date");
+                            txtPluginStatus.AppendText("\r\nPlugin " + item.id + " is up to date");
                         }
 
                     } catch (HttpListenerException e)
                     {
-                        txtPluginStatus.AppendText("\nHttpError: Could not update plugin " + item.id);
+                        txtPluginStatus.AppendText("\r\nHttpError: Could not update plugin " + item.id);
                         Console.WriteLine("Error " + e.ErrorCode.ToString() + ": " + e.Message);
                         continue;
                     } catch (WebException e)
                     {
-                        txtPluginStatus.AppendText("\nHttpError: Could not update plugin " + item.id);
+                        txtPluginStatus.AppendText("\r\nHttpError: Could not update plugin " + item.id);
                         Console.WriteLine(e.StackTrace);
                     }
 
