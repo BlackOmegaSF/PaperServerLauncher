@@ -284,6 +284,20 @@ namespace PaperServerLauncher
             {
                 //Create directory to extract into for evaluation
                 tempDir = Directory.CreateDirectory("BlackOmegaUpdater").FullName;
+                string[] existingFiles = Directory.GetFiles(tempDir);
+                if (existingFiles.Length > 0)
+                {
+                    foreach(string file in existingFiles)
+                    {
+                        try
+                        {
+                            File.Delete(file);
+                        } catch
+                        {
+                            //Do nothing, I don't feel like chasing this issue
+                        }
+                    }
+                }
             }
             foreach (string plugin in plugins) //Traverse the found jar files and extract info file if present
             {
@@ -310,6 +324,7 @@ namespace PaperServerLauncher
                     } catch (IOException)
                     {
                         txtPluginStatus.AppendText("\nError: Could not update plugin " + pluginFileName + "\n - IOException");
+                        continue;
                     }
                 }
             }
@@ -349,7 +364,7 @@ namespace PaperServerLauncher
                     } catch (WebException e)
                     {
                         txtPluginStatus.AppendText("\nHttpError: Could not update plugin " + item.id);
-                        Console.WriteLine(e.Message);
+                        Console.WriteLine(e.StackTrace);
                     }
 
 
