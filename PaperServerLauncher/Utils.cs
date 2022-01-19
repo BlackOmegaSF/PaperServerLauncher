@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -73,7 +74,7 @@ namespace PaperServerLauncher
 
             public RepoInfo(string name, string releaseTag, string downloadUrl)
             {
-                this.name = name;
+                this.name = Regex.Replace(name, "[^0-9.]", "");
                 this.releaseTag = releaseTag;
                 this.downloadUrl = downloadUrl;
             }

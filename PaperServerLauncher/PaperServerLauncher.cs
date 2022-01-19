@@ -13,6 +13,8 @@ using System.IO;
 using static PaperServerLauncher.Utils;
 using System.IO.Compression;
 using Newtonsoft.Json;
+using System.Net;
+using System.Text.RegularExpressions;
 
 namespace PaperServerLauncher
 {
@@ -320,9 +322,31 @@ namespace PaperServerLauncher
                     string json = r.ReadToEnd();
                     Utils.UpdateInfoItem item = JsonConvert.DeserializeObject<Utils.UpdateInfoItem>(json);
 
-                    //TODO Check if update is needed
-
                     //Get latest version tag from Github
+                    try
+                    {
+                        RepoInfo info = NetworkUtils.GetLatestRelease(item.owner, item.repo);
+                        //Compare versions
+                        Version existingVersion = new Version(Regex.Replace(item.version, "[^0-9.]", ""));
+                        Version latestVersion = new Version(info.releaseTag);
+                        if (existingVersion.CompareTo(latestVersion) <= 0) //Current version is older and needs to be updated
+                        {
+                            txtPluginStatus.AppendText("\nPlugin " + item.id + " is outdated, updating...");
+
+                            //TODO update plugin
+
+                        }
+                        else //Plugin is up to date
+                        {
+                            txtPluginStatus.AppendText("\nPlugin " + item.id + " is up to date");
+                        }
+
+                    } catch (HttpListenerException e)
+                    {
+                        txtPluginStatus.AppendText("\nHttpError: Could not update plugin " + item.id);
+                        Console.WriteLine("Error " + e.ErrorCode.ToString() + ": " + e.Message);
+                        continue;
+                    }
 
 
                 }
