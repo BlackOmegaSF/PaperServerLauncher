@@ -346,6 +346,10 @@ namespace PaperServerLauncher
                         txtPluginStatus.AppendText("\nHttpError: Could not update plugin " + item.id);
                         Console.WriteLine("Error " + e.ErrorCode.ToString() + ": " + e.Message);
                         continue;
+                    } catch (WebException e)
+                    {
+                        txtPluginStatus.AppendText("\nHttpError: Could not update plugin " + item.id);
+                        Console.WriteLine(e.Message);
                     }
 
 
