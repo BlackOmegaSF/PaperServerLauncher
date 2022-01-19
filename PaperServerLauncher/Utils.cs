@@ -74,8 +74,8 @@ namespace PaperServerLauncher
 
             public RepoInfo(string name, string releaseTag, string downloadUrl)
             {
-                this.name = Regex.Replace(name, "[^0-9.]", "");
-                this.releaseTag = releaseTag;
+                this.name = name;
+                this.releaseTag = Regex.Replace(releaseTag, "[^0-9.]", "");
                 this.downloadUrl = downloadUrl;
             }
         }
