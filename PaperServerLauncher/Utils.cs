@@ -162,6 +162,17 @@ namespace PaperServerLauncher
                 new AikarFlag("UsingAikarsFlags", true, null, "https://mcflags.emc.gs", "-Dusing.aikars.flags"),
                 new AikarFlag("AikarsNewFlags", true, null, "true", "-Daikars.new.flags"),
             };
+
+            public static string getAllFlagsString()
+            {
+                StringBuilder sb = new StringBuilder();
+                foreach(AikarFlag flag in flagsList)
+                {
+                    sb.Append(flag.RawName);
+                    sb.Append(" ");
+                }
+                return sb.ToString();
+            }
         }
         
     }
