@@ -124,7 +124,6 @@ namespace PaperServerLauncher
             lblMinRam.Text = minRAMText.ToString();
         }
 
-
         //Hide text caret on plugin output text box
         [DllImport("user32.dll")]
         static extern bool HideCaret(IntPtr hWnd);
@@ -138,7 +137,6 @@ namespace PaperServerLauncher
         {
             HideCaret(txtPluginStatus.Handle);
         }
-
 
         //Handle browsing for server jar
         private void btnBrowseJar_Click(object sender, EventArgs e)
@@ -189,6 +187,7 @@ namespace PaperServerLauncher
                 //Disable start server button
                 btnStartServer.Enabled = false;
                 //TODO Disable all input methods
+
 
                 //Clear previous output
                 txtPluginStatus.Text = "";
@@ -302,6 +301,7 @@ namespace PaperServerLauncher
 
         }
 
+        //Update plugins
         private void updatePlugins(string serverDir)
         {
             string pluginsFolder = Path.Combine(serverDir, "plugins");
@@ -435,7 +435,6 @@ namespace PaperServerLauncher
 
         }
 
-
         //Clear red color when text changed
         private void txtServerJar_TextChanged(object sender, EventArgs e)
         {
@@ -489,6 +488,24 @@ namespace PaperServerLauncher
                     txtPluginStatus.AppendText("\r\nError: You chose a file that doesn't exist...");
                 }
                 
+            }
+        }
+
+        private void disableControls(Control con)
+        {
+            foreach (Control c in con.Controls)
+            {
+                disableControls(c);
+            }
+            con.Enabled = false;
+        }
+
+        private void enableControls(Control con)
+        {
+            if (con != null)
+            {
+                con.Enabled = true;
+                enableControls(con.Parent);
             }
         }
     }
