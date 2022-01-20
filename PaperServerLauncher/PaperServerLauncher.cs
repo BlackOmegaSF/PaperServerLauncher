@@ -185,8 +185,8 @@ namespace PaperServerLauncher
             try
             {
                 //Disable start server button
-                btnStartServer.Enabled = false;
-                //TODO Disable all input methods
+                //btnStartServer.Enabled = false;
+                disableControls(this);
 
 
                 //Clear previous output
@@ -294,7 +294,8 @@ namespace PaperServerLauncher
             }
             finally
             {
-                btnStartServer.Enabled = true;
+                //btnStartServer.Enabled = true;
+                enableControls(this);
             }
 
 
@@ -493,20 +494,42 @@ namespace PaperServerLauncher
 
         private void disableControls(Control con)
         {
-            foreach (Control c in con.Controls)
-            {
-                disableControls(c);
-            }
-            con.Enabled = false;
+            btnStartServer.Enabled = false;
+            menuStrip1.Enabled = false;
+            fileToolStripMenuItem.Enabled = false;
+            loadToolStripMenuItem.Enabled = false;
+            resetToolStripMenuItem.Enabled = false;
+            helpToolStripMenuItem.Enabled = false;
+            aboutToolStripMenuItem.Enabled = false;
+            txtServerJar.Enabled = false;
+            btnBrowseJar.Enabled = false;
+            grpJavaFlags.Enabled = false;
+            numRAM.Enabled = false;
+            cbRamUnits.Enabled = false;
+            cbxAikarsFlags.Enabled = false;
+            grpPlugins.Enabled = false;
+            cbxUpdatePlugins.Enabled = false;
         }
 
         private void enableControls(Control con)
         {
-            if (con != null)
-            {
-                con.Enabled = true;
-                enableControls(con.Parent);
-            }
+            btnStartServer.Enabled = true;
+            menuStrip1.Enabled = true;
+            fileToolStripMenuItem.Enabled = true;
+            loadToolStripMenuItem.Enabled = true;
+            resetToolStripMenuItem.Enabled = true;
+            helpToolStripMenuItem.Enabled = true;
+            aboutToolStripMenuItem.Enabled = true;
+            txtServerJar.Enabled = true;
+            btnBrowseJar.Enabled = true;
+            grpJavaFlags.Enabled = true;
+            numRAM.Enabled = true;
+            cbRamUnits.Enabled = true;
+            cbxAikarsFlags.Enabled = true;
+            grpPlugins.Enabled = true;
+            cbxUpdatePlugins.Enabled = true;
+            
         }
+            
     }
 }
