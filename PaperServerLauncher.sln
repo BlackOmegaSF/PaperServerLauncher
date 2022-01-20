@@ -8,11 +8,14 @@ EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
+		PaperServerLauncher|Any CPU = PaperServerLauncher|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{F941EF18-0FC4-4E66-AD07-219E12B495E4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{F941EF18-0FC4-4E66-AD07-219E12B495E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F941EF18-0FC4-4E66-AD07-219E12B495E4}.PaperServerLauncher|Any CPU.ActiveCfg = PaperServerLauncher|Any CPU
+		{F941EF18-0FC4-4E66-AD07-219E12B495E4}.PaperServerLauncher|Any CPU.Build.0 = PaperServerLauncher|Any CPU
 		{F941EF18-0FC4-4E66-AD07-219E12B495E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F941EF18-0FC4-4E66-AD07-219E12B495E4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection

@@ -534,6 +534,31 @@ namespace PaperServerLauncher
             cbxUpdatePlugins.Enabled = true;
             
         }
+
+        private void saveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+            Settings settingsToSave = new Settings(txtServerJar.Text, (int)numRAM.Value, cbRamUnits.SelectedIndex, cbxAikarsFlags.Checked, cbxUpdatePlugins.Checked);
+            string settingsJson = JsonConvert.SerializeObject(settingsToSave);
+            OpenFileDialog ofd = new OpenFileDialog();
+            ofd.Title = "Save settings file";
+            ofd.InitialDirectory = Directory.GetCurrentDirectory();
+            ofd.Filter = "JSON Files (*.json)|*.json";
+            ofd.FileName = Constants.SETTINGS_FILE_NAME;
+            if (ofd.ShowDialog() == DialogResult.OK)
+            {
+                File.WriteAllText(ofd.FileName, settingsJson);
+            }
             
+        }
+
+        private void resetToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            txtServerJar.Text = "";
+            updateRamUnits(Constants.DEFAULT_UNIT_MODE, true);
+            cbRamUnits.SelectedIndex = Constants.DEFAULT_UNIT_MODE;
+            cbxAikarsFlags.Checked = false;
+            cbxUpdatePlugins.Checked = false;
+        }
     }
 }

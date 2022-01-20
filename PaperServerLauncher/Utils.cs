@@ -17,6 +17,7 @@ namespace PaperServerLauncher
         {
             public const int UNIT_MODE_MB = 0;
             public const int UNIT_MODE_GB = 1;
+            public const int DEFAULT_UNIT_MODE = UNIT_MODE_GB;
             public const int MIN_RAM_GB = 2;
             public const int MIN_RAM_MB = MIN_RAM_GB * 1024;
             public const string UPDATER_INFO_FILE_NAME = "BlackOmegaUpdaterInfo.json";

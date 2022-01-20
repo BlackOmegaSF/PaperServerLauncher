@@ -48,6 +48,7 @@
             this.grpPlugins = new System.Windows.Forms.GroupBox();
             this.txtPluginStatus = new System.Windows.Forms.TextBox();
             this.cbxUpdatePlugins = new System.Windows.Forms.CheckBox();
+            this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.grpJavaFlags.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numRAM)).BeginInit();
@@ -78,6 +79,7 @@
             // fileToolStripMenuItem
             // 
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.saveToolStripMenuItem,
             this.loadToolStripMenuItem,
             this.resetToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
@@ -96,6 +98,7 @@
             this.resetToolStripMenuItem.Name = "resetToolStripMenuItem";
             this.resetToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.resetToolStripMenuItem.Text = "Reset";
+            this.resetToolStripMenuItem.Click += new System.EventHandler(this.resetToolStripMenuItem_Click);
             // 
             // helpToolStripMenuItem
             // 
@@ -264,6 +267,13 @@
             this.cbxUpdatePlugins.Text = "Automatically update supported plugins";
             this.cbxUpdatePlugins.UseVisualStyleBackColor = true;
             // 
+            // saveToolStripMenuItem
+            // 
+            this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.saveToolStripMenuItem.Text = "Save...";
+            this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
+            // 
             // ServerLauncher
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -313,6 +323,7 @@
         private System.Windows.Forms.TextBox txtPluginStatus;
         private System.Windows.Forms.CheckBox cbxUpdatePlugins;
         private System.Windows.Forms.Label lblMinRam;
+        private System.Windows.Forms.ToolStripMenuItem saveToolStripMenuItem;
     }
 }
 
