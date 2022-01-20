@@ -274,14 +274,15 @@ namespace PaperServerLauncher
 
                 //Construct server start command string
                 StringBuilder startCommandBuilder = new StringBuilder();
-                startCommandBuilder.Append("java ");
+                startCommandBuilder.Append("/C java ");
                 startCommandBuilder.Append(Formatters.getJVMRamString(unitMode, numRAMValue));
                 if (useAikarsFlags)
                 {
                     startCommandBuilder.Append(AikarFlagData.getAllFlagsString());
                 }
-                startCommandBuilder.Append("-jar ");
+                startCommandBuilder.Append("-jar \"");
                 startCommandBuilder.Append(serverJarPath);
+                startCommandBuilder.Append("\"");
 
                 //Save settings
                 Settings settingsToSave = new Settings(serverJarPath, numRAMValue, unitMode, useAikarsFlags, updatePluginsChecked);
@@ -289,7 +290,8 @@ namespace PaperServerLauncher
                 File.WriteAllText(Path.Combine(Directory.GetCurrentDirectory(), Constants.SETTINGS_FILE_NAME), settingsJson);
 
                 //Launch server
-
+                System.Diagnostics.Process.Start("CMD.exe", startCommandBuilder.ToString());
+                this.Close();
                 
             }
             finally
