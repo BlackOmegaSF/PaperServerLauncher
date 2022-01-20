@@ -21,7 +21,7 @@ namespace PaperServerLauncher
             public const int MIN_RAM_MB = MIN_RAM_GB * 1024;
             public const string UPDATER_INFO_FILE_NAME = "BlackOmegaUpdaterInfo.json";
             public const string GITHUB_BASE_RELEASES_URL = "https://api.github.com/repos/";
-            public const string SETTINGS_FILE_NAME = "PaperServerUpdaterSettings.json";
+            public const string SETTINGS_FILE_NAME = "PaperServerLauncherSettings.json";
         }
 
         public static class Maths

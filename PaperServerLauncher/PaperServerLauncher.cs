@@ -25,20 +25,11 @@ namespace PaperServerLauncher
             InitializeComponent();
             cbRamUnits.SelectedIndex = Constants.UNIT_MODE_MB;
 
-            //TODO Load and apply settings
+            //Load and apply settings
             string settingsFile = Path.Combine(Directory.GetCurrentDirectory(), Constants.SETTINGS_FILE_NAME);
             if (File.Exists(settingsFile))
             {
-                using (StreamReader r = new StreamReader(settingsFile))
-                {
-                    string json = r.ReadToEnd();
-                    Utils.Settings loadedSettings = JsonConvert.DeserializeObject<Utils.Settings>(json);
-                    txtServerJar.Text = loadedSettings.serverJarPath;
-                    numRAM.Value = loadedSettings.ramValue;
-                    cbRamUnits.SelectedIndex = loadedSettings.unitMode;
-                    cbxAikarsFlags.Checked = loadedSettings.useAikarFlags;
-                    cbxUpdatePlugins.Checked = loadedSettings.updatePlugins;
-                }
+                loadSettings(settingsFile);
             }
 
             //Get and update RAM
@@ -153,7 +144,7 @@ namespace PaperServerLauncher
         private void btnBrowseJar_Click(object sender, EventArgs e)
         {
             //Browse to dir based on what's in the box, if it's valid
-            string browseDir = AppDomain.CurrentDomain.BaseDirectory;
+            string browseDir = Directory.GetCurrentDirectory();
             string extgText = txtServerJar.Text;
             if (File.Exists(extgText) || Directory.Exists(extgText))
             {
@@ -458,6 +449,47 @@ namespace PaperServerLauncher
         private void numRAM_ValueChanged(object sender, EventArgs e)
         {
             lblMinRam.Visible = false;
+        }
+
+        private void loadSettings(string settingsFile)
+        {
+            using (StreamReader r = new StreamReader(settingsFile))
+            {
+                string json = r.ReadToEnd();
+                Utils.Settings loadedSettings = JsonConvert.DeserializeObject<Utils.Settings>(json);
+                txtServerJar.Text = loadedSettings.serverJarPath;
+                numRAM.Value = loadedSettings.ramValue;
+                cbRamUnits.SelectedIndex = loadedSettings.unitMode;
+                cbxAikarsFlags.Checked = loadedSettings.useAikarFlags;
+                cbxUpdatePlugins.Checked = loadedSettings.updatePlugins;
+            }
+        }
+
+        private void loadToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog ofd = new OpenFileDialog();
+            ofd.Title = "Select Settings File";
+            ofd.InitialDirectory = Directory.GetCurrentDirectory();
+            ofd.Filter = "JSON Files (*.json)|*.json";
+            ofd.RestoreDirectory = true;
+            if (ofd.ShowDialog() == DialogResult.OK)
+            {
+                if (File.Exists(ofd.FileName))
+                {
+                    try
+                    {
+                        loadSettings(ofd.FileName);
+                    } catch (Exception)
+                    {
+                        txtPluginStatus.AppendText("\r\nError loading settings");
+                    }
+
+                } else
+                {
+                    txtPluginStatus.AppendText("\r\nError: You chose a file that doesn't exist...");
+                }
+                
+            }
         }
     }
 }

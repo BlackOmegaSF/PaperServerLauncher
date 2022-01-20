@@ -39,6 +39,7 @@
             this.txtServerJar = new System.Windows.Forms.TextBox();
             this.btnBrowseJar = new System.Windows.Forms.Button();
             this.grpJavaFlags = new System.Windows.Forms.GroupBox();
+            this.lblMinRam = new System.Windows.Forms.Label();
             this.cbxAikarsFlags = new System.Windows.Forms.CheckBox();
             this.lblCurrentRam = new System.Windows.Forms.Label();
             this.cbRamUnits = new System.Windows.Forms.ComboBox();
@@ -47,7 +48,6 @@
             this.grpPlugins = new System.Windows.Forms.GroupBox();
             this.txtPluginStatus = new System.Windows.Forms.TextBox();
             this.cbxUpdatePlugins = new System.Windows.Forms.CheckBox();
-            this.lblMinRam = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             this.grpJavaFlags.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numRAM)).BeginInit();
@@ -87,13 +87,14 @@
             // loadToolStripMenuItem
             // 
             this.loadToolStripMenuItem.Name = "loadToolStripMenuItem";
-            this.loadToolStripMenuItem.Size = new System.Drawing.Size(109, 22);
+            this.loadToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.loadToolStripMenuItem.Text = "Load...";
+            this.loadToolStripMenuItem.Click += new System.EventHandler(this.loadToolStripMenuItem_Click);
             // 
             // resetToolStripMenuItem
             // 
             this.resetToolStripMenuItem.Name = "resetToolStripMenuItem";
-            this.resetToolStripMenuItem.Size = new System.Drawing.Size(109, 22);
+            this.resetToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.resetToolStripMenuItem.Text = "Reset";
             // 
             // helpToolStripMenuItem
@@ -154,6 +155,18 @@
             this.grpJavaFlags.TabIndex = 5;
             this.grpJavaFlags.TabStop = false;
             this.grpJavaFlags.Text = "Java Flags";
+            // 
+            // lblMinRam
+            // 
+            this.lblMinRam.AutoSize = true;
+            this.lblMinRam.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblMinRam.ForeColor = System.Drawing.Color.Red;
+            this.lblMinRam.Location = new System.Drawing.Point(178, 24);
+            this.lblMinRam.Name = "lblMinRam";
+            this.lblMinRam.Size = new System.Drawing.Size(112, 13);
+            this.lblMinRam.TabIndex = 10;
+            this.lblMinRam.Text = "Minimum RAM is 2GB!";
+            this.lblMinRam.Visible = false;
             // 
             // cbxAikarsFlags
             // 
@@ -250,18 +263,6 @@
             this.cbxUpdatePlugins.TabIndex = 0;
             this.cbxUpdatePlugins.Text = "Automatically update supported plugins";
             this.cbxUpdatePlugins.UseVisualStyleBackColor = true;
-            // 
-            // lblMinRam
-            // 
-            this.lblMinRam.AutoSize = true;
-            this.lblMinRam.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblMinRam.ForeColor = System.Drawing.Color.Red;
-            this.lblMinRam.Location = new System.Drawing.Point(178, 24);
-            this.lblMinRam.Name = "lblMinRam";
-            this.lblMinRam.Size = new System.Drawing.Size(112, 13);
-            this.lblMinRam.TabIndex = 10;
-            this.lblMinRam.Text = "Minimum RAM is 2GB!";
-            this.lblMinRam.Visible = false;
             // 
             // ServerLauncher
             // 
