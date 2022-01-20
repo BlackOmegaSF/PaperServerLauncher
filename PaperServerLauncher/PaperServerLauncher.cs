@@ -220,6 +220,8 @@ namespace PaperServerLauncher
                     return;
                 }
 
+                string pluginsFolder = Path.Combine(new FileInfo(serverJarPath).Directory.FullName, "plugins");
+
                 //Check if min RAM is met
                 int minRamAdjusted;
                 try
@@ -250,7 +252,6 @@ namespace PaperServerLauncher
                     } finally
                     {
                         //Clean up created folders/etc and switch back to original working dir
-                        string pluginsFolder = Path.Combine(new FileInfo(serverJarPath).Directory.FullName, "plugins");
                         string tempDir = Path.Combine(pluginsFolder, "BlackOmegaUpdater");
                         if (Directory.Exists(pluginsFolder) && Directory.Exists(tempDir))
                         {
@@ -279,7 +280,9 @@ namespace PaperServerLauncher
                 startCommandBuilder.Append(serverJarPath);
 
                 //Save settings
-
+                Settings settingsToSave = new Settings(serverJarPath, numRAMValue, unitMode, useAikarsFlags, updatePluginsChecked);
+                string settingsJson = JsonConvert.SerializeObject(settingsToSave);
+                File.WriteAllText(Path.Combine(Directory.GetCurrentDirectory(), "PaperServerUpdaterSettings.json"), settingsJson);
 
                 //Launch server
 
