@@ -291,7 +291,7 @@ namespace PaperServerLauncher
 
                 //Launch server
                 System.Diagnostics.Process.Start("CMD.exe", startCommandBuilder.ToString());
-                this.Close();
+                //this.Close();
                 
             }
             finally
@@ -384,7 +384,7 @@ namespace PaperServerLauncher
                         //Compare versions
                         Version existingVersion = new Version(Regex.Replace(item.version, "[^0-9.]", ""));
                         Version latestVersion = new Version(info.releaseTag);
-                        if (existingVersion.CompareTo(latestVersion) <= 0) //Current version is older and needs to be updated
+                        if (existingVersion.CompareTo(latestVersion) < 0) //Current version is older and needs to be updated
                         {
                             txtPluginStatus.AppendText("\r\nPlugin " + item.id + " is outdated, updating...");
 
