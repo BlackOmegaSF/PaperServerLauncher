@@ -180,7 +180,7 @@ namespace PaperServerLauncher
         }
 
         //Start Server button clicked
-        private void btnStartServer_Click(object sender, EventArgs e)
+        private async void btnStartServer_Click(object sender, EventArgs e)
         {
             try
             {
@@ -290,9 +290,11 @@ namespace PaperServerLauncher
                 File.WriteAllText(Path.Combine(Directory.GetCurrentDirectory(), Constants.SETTINGS_FILE_NAME), settingsJson);
 
                 //Launch server
+                txtPluginStatus.AppendText("\r\nStarting server...");
                 System.Diagnostics.Process.Start("CMD.exe", startCommandBuilder.ToString());
-                //this.Close();
-                
+                await Task.Delay(5000);
+                Close();
+
             }
             finally
             {
@@ -356,7 +358,7 @@ namespace PaperServerLauncher
                                     if (destinationPath.StartsWith(tempDir, StringComparison.Ordinal))
                                     {
                                         entry.ExtractToFile(destinationPath);
-                                        txtPluginStatus.AppendText("\r\nExtracted " + pluginFileName);
+                                        //txtPluginStatus.AppendText("\r\nExtracted " + pluginFileName);
                                     }
                                 }
                             }
