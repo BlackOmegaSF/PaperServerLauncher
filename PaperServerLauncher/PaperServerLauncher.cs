@@ -26,6 +26,20 @@ namespace PaperServerLauncher
             cbRamUnits.SelectedIndex = Constants.UNIT_MODE_MB;
 
             //TODO Load and apply settings
+            string settingsFile = Path.Combine(Directory.GetCurrentDirectory(), Constants.SETTINGS_FILE_NAME);
+            if (File.Exists(settingsFile))
+            {
+                using (StreamReader r = new StreamReader(settingsFile))
+                {
+                    string json = r.ReadToEnd();
+                    Utils.Settings loadedSettings = JsonConvert.DeserializeObject<Utils.Settings>(json);
+                    txtServerJar.Text = loadedSettings.serverJarPath;
+                    numRAM.Value = loadedSettings.ramValue;
+                    cbRamUnits.SelectedIndex = loadedSettings.unitMode;
+                    cbxAikarsFlags.Checked = loadedSettings.useAikarFlags;
+                    cbxUpdatePlugins.Checked = loadedSettings.updatePlugins;
+                }
+            }
 
             //Get and update RAM
             updateRamUnits(cbRamUnits.SelectedIndex, true);
@@ -282,7 +296,7 @@ namespace PaperServerLauncher
                 //Save settings
                 Settings settingsToSave = new Settings(serverJarPath, numRAMValue, unitMode, useAikarsFlags, updatePluginsChecked);
                 string settingsJson = JsonConvert.SerializeObject(settingsToSave);
-                File.WriteAllText(Path.Combine(Directory.GetCurrentDirectory(), "PaperServerUpdaterSettings.json"), settingsJson);
+                File.WriteAllText(Path.Combine(Directory.GetCurrentDirectory(), Constants.SETTINGS_FILE_NAME), settingsJson);
 
                 //Launch server
 
