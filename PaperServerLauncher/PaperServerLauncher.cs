@@ -183,6 +183,7 @@ namespace PaperServerLauncher
             {
                 //Disable start server button
                 btnStartServer.Enabled = false;
+                //TODO Disable all input methods
 
                 //Clear previous output
                 txtPluginStatus.Text = "";
@@ -248,7 +249,7 @@ namespace PaperServerLauncher
                         return;
                     } finally
                     {
-                        //TODO Clean up created folders/etc and switch back to original working dir
+                        //Clean up created folders/etc and switch back to original working dir
                         string pluginsFolder = Path.Combine(new FileInfo(serverJarPath).Directory.FullName, "plugins");
                         string tempDir = Path.Combine(pluginsFolder, "BlackOmegaUpdater");
                         if (Directory.Exists(pluginsFolder) && Directory.Exists(tempDir))
@@ -266,7 +267,21 @@ namespace PaperServerLauncher
                     }
                 }
 
-                //TODO Continue starting process
+                //Construct server start command string
+                StringBuilder startCommandBuilder = new StringBuilder();
+                startCommandBuilder.Append("java ");
+                startCommandBuilder.Append(Formatters.getJVMRamString(unitMode, numRAMValue));
+                if (useAikarsFlags)
+                {
+                    startCommandBuilder.Append(AikarFlagData.getAllFlagsString());
+                }
+                startCommandBuilder.Append("-jar ");
+                startCommandBuilder.Append(serverJarPath);
+
+                //Save settings
+
+
+                //Launch server
 
                 
             }

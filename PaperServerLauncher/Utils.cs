@@ -70,10 +70,10 @@ namespace PaperServerLauncher
                 switch (unitMode)
                 {
                     case Constants.UNIT_MODE_MB:
-                        return "-Xmx" + ram.ToString() + "M -Xms" + ram.ToString() + "M";
+                        return "-Xmx" + ram.ToString() + "M -Xms" + ram.ToString() + "M ";
 
                     case Constants.UNIT_MODE_GB:
-                        return "-Xmx" + ram.ToString() + "G -Xms" + ram.ToString() + "G";
+                        return "-Xmx" + ram.ToString() + "G -Xms" + ram.ToString() + "G ";
 
                     default:
                         throw new ArgumentOutOfRangeException("unitMode");
@@ -184,6 +184,14 @@ namespace PaperServerLauncher
                 foreach(AikarFlag flag in flagsList)
                 {
                     sb.Append(flag.RawName);
+                    if (flag.StrValue != null)
+                    {
+                        sb.Append("=" + flag.StrValue);
+                    }
+                    if (flag.NumValue != null)
+                    {
+                        sb.Append("=" + flag.NumValue.ToString());
+                    }
                     sb.Append(" ");
                 }
                 return sb.ToString();
