@@ -124,6 +124,24 @@ namespace PaperServerLauncher
             }
         }
 
+        public class Settings
+        {
+            public string serverJarPath { get; set; }
+            public int ramValue { get; set; }
+            public int unitMode { get; set; }
+            public bool useAikarFlags { get; set; }
+            public bool updatePlugins { get; set; }
+
+            public Settings(string serverJarPath, int ramValue, int unitMode, bool useAikarFlags, bool updatePlugins)
+            {
+                this.serverJarPath = serverJarPath;
+                this.ramValue = ramValue;
+                this.unitMode = unitMode;
+                this.useAikarFlags = useAikarFlags;
+                this.updatePlugins = updatePlugins;
+            }
+        }
+
         public class UpdateInfoItem
         {
             public string id;
