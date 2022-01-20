@@ -61,7 +61,22 @@ namespace PaperServerLauncher
                     case Constants.UNIT_MODE_GB:
                         return Constants.MIN_RAM_GB.ToString() + "GB";
                     default:
-                        throw new ArgumentOutOfRangeException(nameof(unitMode));
+                        throw new ArgumentOutOfRangeException("unitMode");
+                }
+            }
+
+            public static string getJVMRamString(int unitMode, int ram)
+            {
+                switch (unitMode)
+                {
+                    case Constants.UNIT_MODE_MB:
+                        return "-Xmx" + ram.ToString() + "M -Xms" + ram.ToString() + "M";
+
+                    case Constants.UNIT_MODE_GB:
+                        return "-Xmx" + ram.ToString() + "G -Xms" + ram.ToString() + "G";
+
+                    default:
+                        throw new ArgumentOutOfRangeException("unitMode");
                 }
             }
         }
