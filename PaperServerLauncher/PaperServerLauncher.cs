@@ -260,7 +260,6 @@ namespace PaperServerLauncher
                     } catch (DirectoryNotFoundException)
                     {
                         txtPluginStatus.AppendText("\r\nPlugins directory not found, could not update plugins.");
-                        return;
                     } finally
                     {
                         //Clean up created folders/etc and switch back to original working dir
