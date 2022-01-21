@@ -207,9 +207,17 @@ namespace PaperServerLauncher
                 txtPluginStatus.AppendText("Checking server jar file...");
                 if (File.Exists(serverJarPath)) //server jar is file and exists
                 {
-                    //Convert path to full, non-relative path and continue with server starting
-                    txtPluginStatus.AppendText("\r\nFound valid server jar");
-                    serverJarPath = Path.GetFullPath(serverJarPath);
+                    if (Path.GetExtension(serverJarPath) == ".jar")
+                    {
+                        //Convert path to full, non-relative path and continue with server starting
+                        txtPluginStatus.AppendText("\r\nFound valid server jar");
+                        serverJarPath = Path.GetFullPath(serverJarPath);
+                    } else
+                    {
+                        txtPluginStatus.AppendText("\r\nError: given file is not a valid jar");
+                        return;
+                    }
+                    
                 }
                 else if (Directory.Exists(serverJarPath)) //server jar is directory and exists
                 {
