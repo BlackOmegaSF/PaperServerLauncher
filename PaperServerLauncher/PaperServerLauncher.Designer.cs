@@ -287,6 +287,7 @@
             this.Controls.Add(this.lblServerJar);
             this.Controls.Add(this.btnStartServer);
             this.Controls.Add(this.menuStrip1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "ServerLauncher";
             this.Text = "Paper Server Launcher";
