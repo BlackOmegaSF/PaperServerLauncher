@@ -291,6 +291,7 @@ namespace PaperServerLauncher
 
                 //Launch server
                 txtPluginStatus.AppendText("\r\nStarting server...");
+                //txtPluginStatus.AppendText("\r\nRunning " + startCommandBuilder.ToString());
                 System.Diagnostics.Process.Start("CMD.exe", startCommandBuilder.ToString());
                 await Task.Delay(5000);
                 Close();
@@ -540,14 +541,14 @@ namespace PaperServerLauncher
 
             Settings settingsToSave = new Settings(txtServerJar.Text, (int)numRAM.Value, cbRamUnits.SelectedIndex, cbxAikarsFlags.Checked, cbxUpdatePlugins.Checked);
             string settingsJson = JsonConvert.SerializeObject(settingsToSave);
-            OpenFileDialog ofd = new OpenFileDialog();
-            ofd.Title = "Save settings file";
-            ofd.InitialDirectory = Directory.GetCurrentDirectory();
-            ofd.Filter = "JSON Files (*.json)|*.json";
-            ofd.FileName = Constants.SETTINGS_FILE_NAME;
-            if (ofd.ShowDialog() == DialogResult.OK)
+            SaveFileDialog sfd = new SaveFileDialog();
+            sfd.Title = "Save settings file";
+            sfd.InitialDirectory = Directory.GetCurrentDirectory();
+            sfd.Filter = "JSON Files (*.json)|*.json";
+            sfd.FileName = Constants.SETTINGS_FILE_NAME;
+            if (sfd.ShowDialog() == DialogResult.OK)
             {
-                File.WriteAllText(ofd.FileName, settingsJson);
+                File.WriteAllText(sfd.FileName, settingsJson);
             }
             
         }
@@ -559,6 +560,12 @@ namespace PaperServerLauncher
             cbRamUnits.SelectedIndex = Constants.DEFAULT_UNIT_MODE;
             cbxAikarsFlags.Checked = false;
             cbxUpdatePlugins.Checked = false;
+        }
+
+        private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string aboutMessage = Application.ProductName + " " + Application.ProductVersion;
+            MessageBox.Show(aboutMessage, "About", MessageBoxButtons.OK);
         }
     }
 }
