@@ -478,8 +478,8 @@ namespace PaperServerLauncher
                 string json = r.ReadToEnd();
                 Utils.Settings loadedSettings = JsonConvert.DeserializeObject<Utils.Settings>(json);
                 txtServerJar.Text = loadedSettings.serverJarPath;
-                numRAM.Value = loadedSettings.ramValue;
                 cbRamUnits.SelectedIndex = loadedSettings.unitMode;
+                numRAM.Value = loadedSettings.ramValue;
                 cbxAikarsFlags.Checked = loadedSettings.useAikarFlags;
                 cbxUpdatePlugins.Checked = loadedSettings.updatePlugins;
             }
