@@ -21,15 +21,15 @@ namespace PaperServerLauncher
             InitializeComponent();
             cbRamUnits.SelectedIndex = Constants.UNIT_MODE_MB;
 
+            //Get and update RAM
+            updateRamUnits(cbRamUnits.SelectedIndex, true);
+
             //Load and apply settings
             string settingsFile = Path.Combine(Directory.GetCurrentDirectory(), Constants.SETTINGS_FILE_NAME);
             if (File.Exists(settingsFile))
             {
                 loadSettings(settingsFile);
             }
-
-            //Get and update RAM
-            updateRamUnits(cbRamUnits.SelectedIndex, true);
         }
 
         private void numRAM_KeyPress(object sender, KeyPressEventArgs e)
