@@ -328,7 +328,7 @@ namespace PaperServerLauncher
             string tempDir = "";
             if(plugins.Length > 0)
             {
-                //Create directory to extract into for evaluation
+                //Move working directory to AppData
                 tempDir = Directory.CreateDirectory("BlackOmegaUpdater").FullName;
                 string[] existingFiles = Directory.GetFiles(tempDir);
                 if (existingFiles.Length > 0)
@@ -375,70 +375,82 @@ namespace PaperServerLauncher
                 }
             }
             //Process extracted info files
-            string[] updateInfoFiles = Directory.GetFiles(tempDir, "*.json");
-            foreach (string updateInfoFile in updateInfoFiles)
+            try
             {
-                using (StreamReader r = new StreamReader(updateInfoFile))
+                string[] updateInfoFiles = Directory.GetFiles(tempDir, "*.json");
+                foreach (string updateInfoFile in updateInfoFiles)
                 {
-                    string json = r.ReadToEnd();
-                    Utils.UpdateInfoItem item = JsonConvert.DeserializeObject<Utils.UpdateInfoItem>(json);
-
-                    //Get latest version tag from Github
-                    try
+                    using (StreamReader r = new StreamReader(updateInfoFile))
                     {
-                        RepoInfo info = NetworkUtils.GetLatestRelease(item.owner, item.repo);
-                        //Compare versions
-                        Version existingVersion = new Version(Regex.Replace(item.version, "[^0-9.]", ""));
-                        Version latestVersion = new Version(info.releaseTag);
-                        if (existingVersion.CompareTo(latestVersion) < 0) //Current version is older and needs to be updated
-                        {
-                            txtPluginStatus.AppendText("\r\nPlugin " + item.id + " is outdated, updating...");
+                        string json = r.ReadToEnd();
+                        Utils.UpdateInfoItem item = JsonConvert.DeserializeObject<Utils.UpdateInfoItem>(json);
 
-                            //Download updated plugin file
-                            string downloadPath = Path.Combine(tempDir, Path.GetFileNameWithoutExtension(updateInfoFile) + ".jar");
-                            WebClient webClient = new WebClient();
-                            webClient.DownloadFile(info.downloadUrl, downloadPath);
-                            //If it downloaded, move the downloaded file to plugins and overwrite
-                            if (File.Exists(downloadPath))
+                        //Get latest version tag from Github
+                        try
+                        {
+                            RepoInfo info = NetworkUtils.GetLatestRelease(item.owner, item.repo);
+                            //Compare versions
+                            Version existingVersion = new Version(Regex.Replace(item.version, "[^0-9.]", ""));
+                            Version latestVersion = new Version(info.releaseTag);
+                            if (existingVersion.CompareTo(latestVersion) < 0) //Current version is older and needs to be updated
                             {
-                                try
+                                txtPluginStatus.AppendText("\r\nPlugin " + item.id + " is outdated, updating...");
+
+                                //Download updated plugin file
+                                string downloadPath = Path.Combine(tempDir, Path.GetFileNameWithoutExtension(updateInfoFile) + ".jar");
+                                WebClient webClient = new WebClient();
+                                webClient.DownloadFile(info.downloadUrl, downloadPath);
+                                //If it downloaded, move the downloaded file to plugins and overwrite
+                                if (File.Exists(downloadPath))
                                 {
-                                    string pluginPath = Path.Combine(pluginsFolder, Path.GetFileNameWithoutExtension(updateInfoFile) + ".jar");
-                                    if (File.Exists(pluginPath))
+                                    try
                                     {
-                                        File.Delete(pluginPath);
+                                        string pluginPath = Path.Combine(pluginsFolder, Path.GetFileNameWithoutExtension(updateInfoFile) + ".jar");
+                                        if (File.Exists(pluginPath))
+                                        {
+                                            File.Delete(pluginPath);
+                                        }
+                                        File.Move(downloadPath, pluginPath);
                                     }
-                                    File.Move(downloadPath, pluginPath);
-                                } catch (Exception)
-                                {
-                                    txtPluginStatus.AppendText("\r\nError writing downloaded plugin " + item.id);
+                                    catch (Exception)
+                                    {
+                                        txtPluginStatus.AppendText("\r\nError writing downloaded plugin " + item.id);
+                                    }
                                 }
+                                else
+                                {
+                                    txtPluginStatus.AppendText("\r\nError downloading update for plugin " + item.id);
+                                    continue;
+                                }
+
                             }
-                            else
+                            else //Plugin is up to date
                             {
-                                txtPluginStatus.AppendText("\r\nError downloading update for plugin " + item.id);
-                                continue;
+                                txtPluginStatus.AppendText("\r\nPlugin " + item.id + " is up to date");
                             }
 
                         }
-                        else //Plugin is up to date
+                        catch (HttpListenerException e)
                         {
-                            txtPluginStatus.AppendText("\r\nPlugin " + item.id + " is up to date");
+                            txtPluginStatus.AppendText("\r\nHttpError: Could not update plugin " + item.id);
+                            Console.WriteLine("Error " + e.ErrorCode.ToString() + ": " + e.Message);
+                            continue;
+                        }
+                        catch (WebException e)
+                        {
+                            txtPluginStatus.AppendText("\r\nHttpError: Could not update plugin " + item.id);
+                            Console.WriteLine(e.StackTrace);
                         }
 
-                    } catch (HttpListenerException e)
-                    {
-                        txtPluginStatus.AppendText("\r\nHttpError: Could not update plugin " + item.id);
-                        Console.WriteLine("Error " + e.ErrorCode.ToString() + ": " + e.Message);
-                        continue;
-                    } catch (WebException e)
-                    {
-                        txtPluginStatus.AppendText("\r\nHttpError: Could not update plugin " + item.id);
-                        Console.WriteLine(e.StackTrace);
+
                     }
-
-
                 }
+            } catch (DirectoryNotFoundException)
+            {
+                //Either tempDir failed, or plugins dir is empty, so do nothing
+            } catch (ArgumentException)
+            {
+                //Either tempDir failed, or plugins dir is empty, so do nothing
             }
 
 
